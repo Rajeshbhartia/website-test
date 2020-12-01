@@ -1,0 +1,24 @@
+mixin menuTree(menuName, menuLink, subMenu)
+	console.log(menuName)
+	if subMenu
+		li.nav-item.dropdown
+			a#navbarDropdown.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' aaria-expanded="false")= menuName
+			.dropdown-menu(aria-labelledby='navbarDropdown')
+				each item in subMenu
+					a.dropdown-item(href=item.path)=item.name
+	else
+		// for active link .active
+		li.nav-item
+			a.nav-link(href= menuLink)= menuName
+
+
+header.header.sticky-top.shadow-sm
+	.container
+		.header-content
+			nav.navbar.navbar-expand-lg.navbar-light.custom-nav.px-0
+				#navbarNavDropdown.collapse.navbar-collapse.justify-content-end
+					ul.navbar-nav
+						each item in response.rows
+							if item.menu
+								+menuTree(item.name, item.path, 0)
+

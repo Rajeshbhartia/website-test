@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		title= title
+		| !{bodyData.resp.meta}
+		link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+		link(rel="stylesheet" href='/vendors/magnific-popup.css')
+		link(rel='stylesheet' href='/stylesheets/style.css')
+		link(rel='stylesheet' href='/resources/owlcarousel/assets/owl.carousel.min.css')
+		link(rel='stylesheet' href='/resources/owlcarousel/assets/owl.theme.default.min.css')
+		script(src="https://kit.fontawesome.com/3ef48c52a2.js")
+
+	body
+		if bodyData.resp.layout === "primary"
+			include ./header.jade
+			block content
+			include ./../layouts/footer1.html
+		
+		//- Third party script
+		script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js")
+		script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
+		script(src='/resources/owlcarousel/owl.carousel.js')
+		script(src="/js/main.js")
