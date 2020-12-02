@@ -18,7 +18,7 @@ header.header.sticky-top.shadow-sm
 			nav.navbar.navbar-expand-lg.navbar-light.custom-nav.px-0
 				#navbarNavDropdown.collapse.navbar-collapse.justify-content-end
 					ul.navbar-nav
-						each item in response.rows
+						each item in response
 							if item.menu
 								+menuTree(item.name, item.path, 0)
 
