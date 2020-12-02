@@ -1,7 +1,8 @@
 // ZOHO chat click
-// $("#live-chat").click(function () {
-// 	$(".zsiq_float").click();
-// });
+$("#live-chat").click(function () {
+	$(".zsiq_float").click();
+});
+
 
 // counter
 (function ($) {

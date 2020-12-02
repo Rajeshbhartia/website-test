@@ -1,0 +1,133 @@
+.height-100 {
+    height:100%
+}
+
+/************* productHomeTemplate ************/
+
+.pro-home-cont{
+    background-color: #f2f2f2;
+}
+
+.pro-home-wra{
+    padding: 0px;
+}
+
+.protem-wra {
+    height: 240px;
+    width: 100%;
+}
+
+.title {
+    font-size: 36px;
+    color: #000000;
+    text-align: center;
+}
+
+
+.right-box{
+    background-color: #9DCAEA;
+    height: 50%;
+}
+
+.qw-wra{
+    justify-content: flex-end;
+}
+
+.triangle-topleft {
+	background-color: #9DCAEA;
+	-webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%);
+	clip-path: polygon(100% 0%, 0% 0%, 0% 100%);
+}
+
+
+/************* productShowTemplate ************/
+
+.pro-shtemp-cont{
+    background-color: #2A678A;
+}
+
+.pro-shtemp-wra{
+    padding-bottom: 16px;
+}
+
+.pro-shtemp-title {
+    font-size: 36px;
+    color: var(--white);
+    text-align: center;
+    padding-top: 24px;
+}
+
+.each-pro-wra {
+    background: var(--white);
+	margin: 32px;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.each-pro-img-wra{
+    text-align: center;
+}
+
+.img {
+    width: 200px;
+    height: 200px;
+}
+
+.each-pro-name {
+    font-size: 24px;
+    color: var(--danger);
+    text-align: center;
+    padding: 8px;
+}
+
+.each-pro-cont {
+    color: #4F4F4F;
+    font-size: 14px;
+    padding: 12px;
+    text-align: center;
+    line-height: 24px;
+}
+
+.pro-btn-wra{
+    padding:0px 12px;
+}
+
+.each-pro-btn{
+    width: 100%;
+    background-color: var(--danger);
+    border: none;
+    border-radius: 4px;
+    height: 44px;
+    margin: 12px 0px;
+    font-size: 20px;
+	color: var(--white);
+	text-transform: uppercase;
+}
+
+.pro-animate {
+    transition: .3s;
+}
+
+.pro-animate:hover{
+    margin-top: 24px;
+	box-shadow: 0px 2px 1px rgba(43, 99, 131, 0.75), 0px 8px 2px rgba(43, 99, 131, 0.75), 0px 2px 3px rgba(43, 99, 131, 0.75);
+}
+
+.pht-nav-tabs{
+    display: flex;
+    justify-content: center;
+}
+
+.pht-nav-link{
+    margin: 0px 16px;
+    padding: 4px 16px;
+    color:#000000;
+}
+
+.pht-nav-link:hover{
+    color: #000000;
+}
+
+.pht-nav-link.active{
+    border-bottom: 4px solid var(--primary);
+}

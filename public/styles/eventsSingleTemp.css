@@ -1,0 +1,17 @@
+.event-single .event-time-place-share p.time::before {
+	font-family: "Font Awesome 5 free";
+	content: "\f017";
+    font-weight: 400;
+    margin-right: 8px;
+}
+
+.event-single .event-time-place-share p.location::before {
+	font-family: "Font Awesome 5 free";
+	content: "\f3c5";
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+.event-single .share-icon a {
+    font-size: 24px;
+}

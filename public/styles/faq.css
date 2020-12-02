@@ -1,0 +1,42 @@
+.document-search {
+	background-color: #2A678A;
+}
+
+.document-search .search-box {
+	width: 50%;
+}
+
+.document-category ul li a {
+	font-size: 14px;
+	display: block;
+	text-transform: capitalize;
+	padding: 2px 15px;
+	text-align: left;
+}
+
+.document-category ul li a:hover,
+.document-category ul li a.active {
+	background-color: #2A678A;
+	color: white;
+}
+
+.document-category .box {
+	/* margin-left: 30px; */
+	text-align: left;
+}
+
+.document-category .box ul li a {
+	font-size: 14px;
+	display: block;
+	text-transform: capitalize;
+	padding: 0px 0;
+}
+
+.document-category .box ul li a:hover {
+	color: #2A678A;
+	background-color: #fff;
+}
+
+.document-category .not-found {
+	background-color: rgb(240, 239, 241);
+}

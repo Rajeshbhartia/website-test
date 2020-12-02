@@ -1,0 +1,67 @@
+/*************** sboTemplateLeft template ************/
+
+.stl-image {
+    height: 180px;
+    width: auto;
+}
+
+.stl-heading {
+    font-size: 36px;
+    line-height: 42px;
+    color: var(--primary);
+}
+
+.stl-subhead {
+    font-size: 24px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.stl-content {
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.83);
+}
+
+.stl-btn {
+    padding: 12px 32px;
+    background: var(--primary);
+    color: var(--white);
+    outline: none;
+    border: 0px;
+    text-transform: uppercase;
+    border-radius: 24px;
+    margin: 4px;
+}
+
+.stl-list-wrap {
+    padding: 50px 80px 50px 80px;
+    background: var(--white);
+    margin-top: 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: left;
+}
+
+.stl-list-sing {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.stl-list-checked {
+    height: 16px;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+@media only screen and (max-width: 992px) {
+    .stl-container {
+        flex-direction: column-reverse;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .stl-list-wrap {
+        padding: 50px 40px 50px 40px;
+    }
+}

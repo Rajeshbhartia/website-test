@@ -1,0 +1,61 @@
+.our-team-title {
+	background-color: #182333;
+	color: var(--white);
+	padding: 80px 0;
+}
+
+.team-card {
+    margin-top: -60px;
+}
+
+.card-flip:hover .backside,
+.card-flip.hover .backside {
+    transform: rotateY(0deg);
+    border-radius: .25rem;
+}
+
+.card-flip:hover .frontside,
+.card-flip.hover .frontside {
+    transform: rotateY(180deg);
+}
+
+.mainflip {
+    transition: 1s;
+    transform-style: preserve-3d;
+    position: relative;
+	margin-bottom: 30px;
+}
+
+.frontside {
+    position: relative;
+	z-index: 2;
+	box-shadow: 0 0 25px 0 rgba(41,61,88,.09);
+}
+
+.backside {
+    position: absolute;
+    top: 0;
+    left: 0;
+	transform: rotateY(-180deg);
+	box-shadow: 0 0 25px 0 rgba(41,61,88,.09);
+	height: 100%;
+	padding: 20px;
+	background-color: var(--white);
+}
+
+.frontside,
+.backside {
+    backface-visibility: hidden;
+    transition: 1s;
+    transform-style: preserve-3d;
+}
+
+.frontside .card-wrap,
+.backside .card-wrap {
+    min-height: 312px;
+}
+
+.backside .card-wrap a {
+	font-size: 18px;
+	padding: 4px;
+}

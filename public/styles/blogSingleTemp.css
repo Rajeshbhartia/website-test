@@ -1,0 +1,29 @@
+.details .share a {
+	font-size: 24px;
+	padding: 4px;
+}
+
+.details .comment-section {
+	background-color: rgb(240, 239, 241);
+}
+
+.all-comments .comment .user-avator {
+	width: 40px;
+	height: 40px;
+	align-self: flex-start;
+	margin-right: 15px;
+}
+
+.all-comments .action-btn .replay::before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: "\f3e5";
+	margin-right: 8px;
+}
+
+.all-comments .action-btn .share::before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: "\f1e0";
+	margin-right: 8px;
+}

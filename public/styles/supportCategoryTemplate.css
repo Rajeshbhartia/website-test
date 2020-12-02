@@ -1,0 +1,32 @@
+.support-category .box {
+	height: 100%;
+	padding: 15px 0;
+}
+
+.support-category .single-category {
+	display: block;
+	padding: 20px;
+	border-radius: 8px;
+	transition: all .2s ease-in-out;
+	height: 100%;
+	cursor: pointer;
+}
+
+.support-category .single-category:hover {
+	background-color: rgba(241, 241, 241, 0.8);
+}
+
+.support-category .single-category i {
+	font-size: 4rem;
+	color: #E10050;
+	margin-top: 20px;
+}
+
+.support-category .single-category h5 {
+	color: #000;
+	margin: 20px 0;
+}
+
+.support-category .single-category p {
+	color: #005087;
+}

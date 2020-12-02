@@ -1,0 +1,114 @@
+.home-slider-wrapper {
+	min-height: 400px;
+}
+
+.home-slider-wrapper .single-slide img {
+	padding: 60px;
+	width: auto !important;
+	margin: 0 auto;
+}
+
+.home-slider-wrapper .single-slide {
+	/* min-height: 650px; */
+}
+
+.home-slider-wrapper .single-slide .text-content p {
+	color: #d8d8d8;
+}
+
+.home-slider-wrapper .single-slide.slide-1 {
+	background: #136a8a;
+	background: -webkit-linear-gradient(to right, #267871, #136a8a);
+	background: linear-gradient(to right, #267871, #136a8a);
+}
+
+.home-slider-wrapper .single-slide.slide-2 {
+	background: #403A3E;
+	background: -webkit-linear-gradient(to right, #BE5869, #403A3E);
+	background: linear-gradient(to right, #BE5869, #403A3E);
+}
+
+.home-slider-wrapper .owl-nav button {
+	width: 36px;
+    height: 36px;
+    border-radius: 50% !important;
+}
+
+.home-slider-wrapper .owl-theme .owl-nav [class*=owl-]:hover {
+	background-color: #dd4445;
+}
+
+.home-slider-wrapper .owl-theme .owl-nav {
+	margin-top: 0;
+}
+
+.home-slider-wrapper .owl-theme .owl-dots {
+	/* position: absolute;
+    bottom: 8px;
+	left: 50%;
+	transform: translateX(-50%); */
+	margin-top: 10px;
+}
+
+.home-slider-wrapper .owl-theme .owl-dots .active span{
+	background-color: #dd4445 !important;
+	width: 14px;
+    height: 14px;
+    margin: 0px 7px 3px 7px;
+}
+
+.home-slider-wrapper .owl-nav button span {
+	font-size: 36px;
+	color: white;
+
+}
+
+.home-slider-wrapper .owl-nav .owl-prev {
+	position: absolute;
+	left: 10px;
+	top: 45%;
+}
+
+.home-slider-wrapper .owl-nav .owl-next {
+	position: absolute;
+	right: 10px;
+	top: 45%;
+}
+
+.home-slider-wrapper .active .animation.animated-item-1 {
+    -webkit-animation: fadeInUp 200ms linear 200ms both;
+    -moz-animation: fadeInUp 200ms linear 200ms both;
+    -o-animation: fadeInUp 200ms linear 200ms both;
+    -ms-animation: fadeInUp 200ms linear 200ms both;
+    animation: fadeInUp 200ms linear 200ms both;
+}
+
+.home-slider-wrapper .active .animation.animated-item-2 {
+    -webkit-animation: fadeInUp 200ms linear 400ms both;
+    -moz-animation: fadeInUp 200ms linear 400ms both;
+    -o-animation: fadeInUp 200ms linear 400ms both;
+    -ms-animation: fadeInUp 200ms linear 400ms both;
+    animation: fadeInUp 200ms linear 400ms both;
+}
+
+.home-slider-wrapper .active .animation.animated-item-3 {
+    -webkit-animation: fadeInUp 200ms linear 600ms both;
+    -moz-animation: fadeInUp 200ms linear 600ms both;
+    -o-animation: fadeInUp 200ms linear 600ms both;
+    -ms-animation: fadeInUp 200ms linear 600ms both;
+    animation: fadeInUp 200ms linear 600ms both;
+}
+
+.home-slider-wrapper .active .animation.animated-item-4 {
+    -webkit-animation: fadeIn 200ms linear 800ms both;
+    -moz-animation: fadeIn 200ms linear 800ms both;
+    -o-animation: fadeIn 200ms linear 800ms both;
+    -ms-animation: fadeIn 200ms linear 800ms both;
+    animation: fadeIn 200ms linear 800ms both;
+}
+
+@media screen and (max-width: 991px) {
+    .home-slider-wrapper .owl-nav {
+        display: none;
+	}
+}

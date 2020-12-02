@@ -1,0 +1,8 @@
+/* .awards-title h1::before {
+	font-family: "Font Awesome 5 free";
+	content: "\f559";
+	font-weight: 900;
+} */
+.awards {
+    background-color: #f2f1f1;
+}

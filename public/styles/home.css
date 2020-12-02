@@ -1,0 +1,144 @@
+/************* hometemplate1 ************/
+
+img.perform_save_security {
+	height: 300px;
+	width: auto;
+}
+
+.pscHeading {
+	font-size: 32px;
+	line-height: 42px;
+	color: var(--black);
+}
+
+.pscSubHead {
+	font-size: 16px;
+	line-height: 32px;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.seePkgBtn {
+	padding: 12px 32px;
+	background: var(--primary);
+	color: var(--white);
+	outline: none;
+	border: 0px;
+	text-transform: uppercase;
+	margin: 4px;
+}
+
+/*************** hometemplate2 ************/
+
+/* .h2-t-wrap {
+	/**background-color: var(--home2background) **/
+	/**background-color: var(--primary); **/
+
+.h2-title {
+	font-size: 24px;
+	line-height: 36px;
+	padding: 0px 20px 0px 20px;
+	color: #636262;
+}
+
+.h2-c-wrap {
+	background-color: var(--primary-light);
+}
+
+.h2-c {
+	font-size: 20px;
+	line-height: 32px;
+	padding-bottom: 20px;
+}
+
+.h2-list-h {
+	font-size: 24px;
+	line-height: 32px;
+}
+
+
+.h2-list-wrap {
+	padding: 50px 80px 50px 80px;
+	background: var(--white);
+	margin-top: 32px;
+	box-shadow: 0px .5px .5px rgba(0, 0, 0, 0.25);
+	text-align: left;
+}
+
+.h2-list-sing {
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 8px;
+}
+
+.h2-list-checked {
+	height: 16px;
+	margin-right: 8px;
+	margin-top: 4px;
+}
+
+/************* countTemplate **************/
+
+.statistics {
+	background-color: rgba(0, 80, 135, 0.8);
+	color: var(--white);
+}
+
+.heading {
+	font-size: 36px;
+}
+
+.subheading {
+	font-size: 20px;
+}
+
+/************** fraturetemplate *************/
+
+.ft-contianer {
+	background: var(--white);
+}
+
+.feature-temp-title {
+	font-size: 36px;
+	line-height: 42px;
+}
+
+.ft-s-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 48px 32px;
+}
+
+.ft-sc-title {
+	padding-top: 16px;
+	padding-bottom: 32px;
+	font-size: 36px;
+	line-height: 42px;
+	text-align: center;
+}
+
+.ft-sc-desc {
+	font-size: 14px;
+	line-height: 24px;
+	text-align: center;
+}
+
+.ft-btn {
+	padding: 16px;
+	background: var(--primary);
+	border-radius: 4px;
+	outline: none;
+	border: 0px;
+	color: var(--white);
+	margin: 4px 20px;
+}
+
+.clnt-sl-clr {
+	color: var(--primary);
+}
+
+@media only screen and (max-width: 768px) {
+	.h2-list-wrap {
+		padding: 50px 40px 50px 40px;
+	}
+}

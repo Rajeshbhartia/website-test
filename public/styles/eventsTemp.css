@@ -1,0 +1,22 @@
+.events-title {
+	background-color: #f2f1f1;
+}
+
+.events a.card {
+	color: inherit;
+}
+
+.events a.card:hover {
+	color: inherit;
+	box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.events a.card .event-title {
+	line-height: 26px;
+}
+
+.events a.card .event-subtitle{
+	font-size: 13px;
+	color: #999;
+	line-height: 1.5;
+}

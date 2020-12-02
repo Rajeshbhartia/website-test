@@ -1,0 +1,2 @@
+//zoho chat
+var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq || { widgetcode: "9afb2da82e378e4d7666fd6de8bb31d31daddab5ef7df81e471b2bd6d632fc14", values: {}, ready: function () { } }; var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true; s.src = "https://salesiq.zoho.com/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t); d.write("<div id='zsiqwidget'></div>");

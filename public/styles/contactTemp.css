@@ -1,0 +1,23 @@
+.contact .contact-info p::before {
+    font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	margin-right: 8px;
+}
+
+.contact .contact-info .email::before {
+	content: "\f0e0";
+}
+
+.contact .contact-info .skype::before {
+	font-family: "Font Awesome 5 Brands";
+	content: "\f17e";
+	font-weight: 400;
+}
+
+.contact .contact-info .phone::before {
+	content: "\f095";
+}
+
+.contact .contact-info address {
+	line-height: 28px;
+}
