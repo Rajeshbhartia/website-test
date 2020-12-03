@@ -34,25 +34,69 @@ function onAppQuery(object, args) {
 		}
 	})
 }
+function createSubMenu(ele, array) {
+	const sourceStr = ele.path;
+	// let array = [...arr];
 
-app.use(async (req, res, next) => {
-	try {
-		let fResp = await onAppQuery('path,name,menu,menu_order', `WHERE menu = '1'`);
-		let resp = await onAppQuery('content,meta,layout', `WHERE path = '${req.path}'`);
-		res.render('index', { bodyData: resp[0], response: fResp });
-	} catch (error) {
-		next(createError(404));
+	const searchStr = '/';
+	const indexes = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(a => a.index);
+	let pPath = sourceStr.substring(indexes[0] + 1, indexes[1]);
+	const found = array.find(element => element.name === pPath);
+	if (found) {
+		found.submenu.push(ele);
+		found.submenu.sort((a, b) => {
+			return a.menu_order - b.menu_order
+		});
+
+	} else {
+		let elem = {}
+		elem.name = pPath;
+		elem.path = "#";
+		elem.menu = ele.menu;
+		elem.menu_order = ele.menu_order;
+		elem.submenu = [];
+		elem.submenu.push(ele)
+		array.push(elem);
 	}
-})
+}
 
-// error handler
-app.use(function (err, req, res, next) {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
-});
+(async function GeneratePage() {
+	let fResp = await onAppQuery('path,name,menu,menu_order,sub_menu,sub_menu_order', `WHERE menu = '1'`);
+	let menuTree = [];
+
+	fResp = fResp.sort((a, b) => {
+		return a.menu_order - b.menu_order
+	})
+
+	fResp.forEach(element => {
+		if (element.sub_menu) {
+			createSubMenu(element, menuTree)
+		} else {
+			menuTree.push(element)
+		}
+	});
+
+	app.use(async (req, res, next) => {
+		try {
+			let resp = await onAppQuery('content,meta,layout', `WHERE path = '${req.path}'`);
+			if (resp.length)
+				res.render('index', { bodyData: resp[0], response: menuTree });
+			else next(createError(404, 'This Content does not exist!', { extraProp: "Error Layout Data " }));
+		} catch (error) {
+			next(createError(404));
+		}
+	})
+
+	// error handler
+	app.use(function (err, req, res, next) {
+		// set locals, only providing error in development
+		res.locals.message = err.message;
+		res.locals.error = req.app.get('env') === 'development' ? err : {};
+		// render the error page
+		res.status(err.status || 500);
+		res.render('error');
+	});
+})()
+
 
 module.exports = app;

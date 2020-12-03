@@ -20,5 +20,5 @@ header.header.sticky-top.shadow-sm
 					ul.navbar-nav
 						each item in response
 							if item.menu
-								+menuTree(item.name, item.path, 0)
+								+menuTree(item.name, item.path, item.submenu)
 
