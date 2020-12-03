@@ -19,12 +19,12 @@ const pool = mariadb.createPool({
 	database: 'website_test'
 });
 
-function onAppQuery(object, args) {
+function onAppQuery(tableName, columns, args) {
 	return new Promise(async (res, rej) => {
 		let conn;
 		try {
 			conn = await pool.getConnection();
-			let rows = await conn.query(`SELECT ${object} FROM pages ${args}`);
+			let rows = await conn.query(`SELECT ${columns} FROM ${tableName} ${args}`);
 			res(rows);
 		} catch (err) {
 			console.log(err)
@@ -41,6 +41,7 @@ function createSubMenu(ele, array) {
 	const searchStr = '/';
 	const indexes = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(a => a.index);
 	let pPath = sourceStr.substring(indexes[0] + 1, indexes[1]);
+	pPath = pPath.replace(/\b\w/g, l => l.toUpperCase());
 	const found = array.find(element => element.name === pPath);
 	if (found) {
 		found.submenu.push(ele);
@@ -61,24 +62,27 @@ function createSubMenu(ele, array) {
 }
 
 (async function GeneratePage() {
-	let fResp = await onAppQuery('path,name,menu,menu_order,sub_menu,sub_menu_order', `WHERE menu = '1'`);
+	let fResp = await onAppQuery('contents', 'path,name,menu,menu_order,sub_menu,sub_menu_order', `WHERE menu = 'yes'`);
 	let menuTree = [];
-
+	// console.log(fResp)
 	fResp = fResp.sort((a, b) => {
 		return a.menu_order - b.menu_order
 	})
 
 	fResp.forEach(element => {
-		if (element.sub_menu) {
+		if (element.sub_menu === 'yes') {
 			createSubMenu(element, menuTree)
 		} else {
 			menuTree.push(element)
 		}
 	});
 
+	// console.log(menuTree);
+
 	app.use(async (req, res, next) => {
 		try {
-			let resp = await onAppQuery('content,meta,layout', `WHERE path = '${req.path}'`);
+			let resp = await onAppQuery('contents', 'content,meta,layout', `WHERE path = '${req.path}'`);
+			console.log(resp[0]);
 			if (resp.length)
 				res.render('index', { bodyData: resp[0], response: menuTree });
 			else next(createError(404, 'This Content does not exist!', { extraProp: "Error Layout Data " }));
