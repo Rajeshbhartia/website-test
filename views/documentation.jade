@@ -1,8 +1,5 @@
 - console.log(docsResp, categories, bodyData);
 script.
-	var dataObj = !{JSON.stringify(docsResp)}
-
-	console.log(dataObj)
 
 	var handleCategory = (event) => {
 		let currentTarget = event.currentTarget
@@ -19,13 +16,13 @@ script.
 		document.getElementById('category-name').innerText = currentTarget.innerText
 		categoryItem.innerHTML = ""
 
-		categoriesArr.map((item) => {
-			if(item.categorie === currentTarget.innerText) {
-				categoryItem.innerHTML += `<li><a href="/">${item}</a></li>`
-				//- categoryItem.innerHTML += `<li><a href="/${dataObj.all_post.title}/${item.slug}">${item.title}</a></li>`
+		var dataObj = !{JSON.stringify(docsResp)}
+		dataObj.map((item) => {
+			console.log(item.category, currentTarget.innerText)
+			if(item.category === currentTarget.innerText.toLowerCase()) {
+				categoryItem.innerHTML += `<li><a href="${item.path}">${item.name}</a></li>`
 			}
 		})
-		- console.log(docsResp)
 	}
 
 .document-search
@@ -55,16 +52,15 @@ script.
 							li
 								a(href="javascript:;" onclick='handleCategory(event)' class=categories[0]==item? "active": null)= item
 
-			//- .col-md-5
-			//- 	.box.py-4.ml-md-4
-			//- 		h5#category-name.pb-2= bodyData.categories_menu[0]
-			//- 		- var currentCategory= "Newsletters";
-			//- 		ul
-			//- 			#category-item
-			//- 				each item in bodyData.all_post.body
-			//- 					if bodyData.categories_menu[0] === item.categorie
-			//- 						li
-			//- 							a(href= "/"+ bodyData.all_post.title)= item.title
+			.col-md-5
+				.box.py-4.ml-md-4
+					h5#category-name.pb-2= categories[0]
+					ul
+						#category-item
+							each item in docsResp
+								if categories[0] === item.category
+									li
+										a(href= item.path)= item.name
 
 			//- .col-md-3
 			//- 	.box.py-4.ml-md-4
