@@ -86,11 +86,11 @@ function createSubMenu(ele, array) {
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
-					let catagories = new Set();
+					let categories = new Set();
 					docsResp.forEach((item) => {
-						catagories.add(item.category);
+						categories.add(item.category);
 					})
-					res.render('index', { bodyData: resp[0], response: menuTree, catagories, docsResp });
+					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp });
 				} else if (resp[0].layout === 'doc_details') {
 					let categoryWisePosts = await onAppQuery('contents', 'name,path', `WHERE category = '${resp[0].category}'`);
 					let allPosts = await onAppQuery('contents', 'name,path,hits', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
