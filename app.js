@@ -64,7 +64,6 @@ function createSubMenu(ele, array) {
 (async function GeneratePage() {
 	let fResp = await onAppQuery('contents', 'path,name,menu,menu_order,sub_menu,sub_menu_order', `WHERE menu = 'yes'`);
 	let menuTree = [];
-	// console.log(fResp)
 	fResp = fResp.sort((a, b) => {
 		return a.menu_order - b.menu_order
 	})
@@ -77,12 +76,9 @@ function createSubMenu(ele, array) {
 		}
 	});
 
-	// console.log(menuTree);
-
 	app.use(async (req, res, next) => {
 		try {
 			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}'`);
-			// console.log(resp[0]);
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
@@ -98,7 +94,10 @@ function createSubMenu(ele, array) {
 
 				} else if (resp[0].layout === 'blog') {
 					let allBlogs = await onAppQuery('contents', '*', `WHERE content_type = 'blog'`);
-					res.render('index', { bodyData: resp[0], response: menuTree });
+					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs });
+				} else if (resp[0].layout === 'blog_details') {
+					let allBlogs = await onAppQuery('contents', 'name,path,category', `WHERE content_type = 'blog'`);
+					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs });
 				}
 				else
 					res.render('index', { bodyData: resp[0], response: menuTree });
