@@ -81,16 +81,25 @@ function createSubMenu(ele, array) {
 
 	app.use(async (req, res, next) => {
 		try {
-			let resp = await onAppQuery('contents', 'content,meta,layout', `WHERE path = '${req.path}'`);
+			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}'`);
 			// console.log(resp[0]);
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
 					let categories = new Set();
-					docsResp.forEach((item, i) => {
+					docsResp.forEach((item) => {
 						categories.add(item.category);
 					})
 					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp });
+				} else if (resp[0].layout === 'doc_details') {
+					let categoryWisePosts = await onAppQuery('contents', 'name,path', `WHERE category = '${resp[0].category}'`);
+					let allPosts = await onAppQuery('contents', 'name,path,hits', `WHERE content_type = 'post'`);
+					allPosts.sort((a, b) => {
+						return b.hits - a.hits
+					})
+					console.log(allPosts);
+					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts: allPosts, relatedPosts: categoryWisePosts });
+
 				} else
 					res.render('index', { bodyData: resp[0], response: menuTree });
 			}
