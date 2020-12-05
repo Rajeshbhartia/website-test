@@ -81,19 +81,25 @@ function createSubMenu(ele, array) {
 			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}'`);
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
+					console.log("object");
+
 					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
 					let categories = new Set();
+					docsResp.forEach(item => categories.add(item.category));
 
 					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
 					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' ORDER BY creation_date desc LIMIT 5`);
 
+
+					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp, popularPosts, recentPosts });
+				} else if (resp[0].layout === 'doc_details') {
+
+					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}'`);
+					let categories = new Set();
 					docsResp.forEach(item => categories.add(item.category));
 
-					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp, popularPosts: popularPosts, recentPosts: recentPosts });
-				} else if (resp[0].layout === 'doc_details') {
-					let categoryWisePosts = await onAppQuery('contents', 'name,path', `WHERE category = '${resp[0].category}'`);
-					let allPosts = await onAppQuery('contents', 'name,path,hits', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
-					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts: allPosts, relatedPosts: categoryWisePosts });
+					let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
+					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories) });
 
 				} else if (resp[0].layout === 'blog') {
 					let allBlogs = await onAppQuery('contents', '*', `WHERE content_type = 'blog'`);

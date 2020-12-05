@@ -1,0 +1,54 @@
+.document-category.py-5
+	.container
+
+		nav
+			ol.breadcrumb
+				li.breadcrumb-item
+					a(href='/') Home
+				li.breadcrumb-item
+					a(href='/support') Support
+				li.breadcrumb-item.text-capitalize
+					a(href=`/${bodyData.post_type}`)= bodyData.post_type
+				li.breadcrumb-item.active(aria-current='page')= bodyData.name
+
+		.row
+
+			.col-md-8
+				.details.py-4
+					h1.pb-2= bodyData.name
+					#answer-content.content
+						| !{bodyData.content}
+
+				.category-dropdown
+					#accordionExample.accordion
+						each item in categories
+							-var idName = item.replace(/ /g, "");
+
+							.card
+								.card-header
+								h2.mb-0
+									button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target=`#${idName}`)= item
+								div(class="collapse" id= idName aria-labelledby='headingOne' data-parent='#accordionExample')
+									.card-body.p-0
+										ul
+											each singleDocs in docsResp
+												if singleDocs.category === item
+													li
+														a.pl-4(href= singleDocs.path)= singleDocs.name
+
+
+			.col-md-4
+				.single-category.shadow.py-4.mb-4
+					h5.pb-2.text-center Related Articles
+					ul
+						each item in docsResp
+							if item.category === bodyData.category
+								li
+									a(href= item.path)= item.name
+
+				.single-category.shadow.py-4.mb-4
+					h5.pb-2.text-center Popular Articles
+					ul
+						each item in popularPosts
+							li
+								a(href= item.path)= item.name
