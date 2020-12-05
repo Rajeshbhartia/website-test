@@ -82,9 +82,19 @@ function createSubMenu(ele, array) {
 	app.use(async (req, res, next) => {
 		try {
 			let resp = await onAppQuery('contents', 'content,meta,layout', `WHERE path = '${req.path}'`);
-			console.log(resp[0]);
-			if (resp.length)
-				res.render('index', { bodyData: resp[0], response: menuTree });
+			// console.log(resp[0]);
+			if (resp.length) {
+				if (resp[0].layout === 'primary')
+					res.render('index', { bodyData: resp[0], response: menuTree });
+				else if (resp[0].layout === 'documentation') {
+					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
+					let catagories = new Set();
+					docsResp.forEach((item, i) => {
+						catagories.add(item.category);
+					})
+					res.render('index', { bodyData: resp[0], response: menuTree, catagories, docsResp });
+				}
+			}
 			else next(createError(404, 'This Content does not exist!', { extraProp: "Error Layout Data " }));
 		} catch (error) {
 			next(createError(404));
