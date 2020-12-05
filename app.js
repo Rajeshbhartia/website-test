@@ -86,11 +86,11 @@ function createSubMenu(ele, array) {
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
-					let catagories = new Set();
+					let categories = new Set();
 					docsResp.forEach((item, i) => {
-						catagories.add(item.category);
+						categories.add(item.category);
 					})
-					res.render('index', { bodyData: resp[0], response: menuTree, catagories, docsResp });
+					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp });
 				} else
 					res.render('index', { bodyData: resp[0], response: menuTree });
 			}
