@@ -17,10 +17,29 @@ html
 		script(src="https://kit.fontawesome.com/3ef48c52a2.js")
 
 	body
-		if bodyData.layout === "primary"
-			include ./header.jade
-			block content
-			include ./../layouts/footer.html
+
+		case bodyData.layout
+			when "primary"
+				include ./header.jade
+				block content
+				include ./../layouts/footer.html
+
+			when "support_home"
+				include ./header.jade
+				include ./supportSearch.jade
+				block content
+				include ./../layouts/footer.html
+
+			when "documentation"
+				include ./header.jade
+				include ./supportSearch.jade
+				block content
+				include ./../layouts/footer.html
+
+			default
+				include ./header.jade
+				block content
+				include ./../layouts/footer.html
 
 		//- Third party script
 		script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js")
