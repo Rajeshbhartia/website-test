@@ -29,7 +29,8 @@
 	font-size: 14px;
 	display: block;
 	text-transform: capitalize;
-	padding: 0px 0;
+	padding: 6px 0;
+	line-height: 20px;
 }
 
 .document-category .box ul li a:hover {

@@ -32,9 +32,16 @@ html
 
 			when "documentation"
 				include ./header.jade
-				//- include ./supportSearch.jade
+				include ./supportSmallSearch.jade
 				include ./documentation.jade
+				include ./docsNotFound.jade
+				include ./../layouts/footer.html
+
+			when "doc_details"
+				include ./header.jade
+				include ./supportSmallSearch.jade
 				block content
+				include ./docsNotFound.jade
 				include ./../layouts/footer.html
 
 			default
