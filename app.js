@@ -93,14 +93,14 @@ function createSubMenu(ele, array) {
 					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp });
 				} else if (resp[0].layout === 'doc_details') {
 					let categoryWisePosts = await onAppQuery('contents', 'name,path', `WHERE category = '${resp[0].category}'`);
-					let allPosts = await onAppQuery('contents', 'name,path,hits', `WHERE content_type = 'post'`);
-					allPosts.sort((a, b) => {
-						return b.hits - a.hits
-					})
-					console.log(allPosts);
+					let allPosts = await onAppQuery('contents', 'name,path,hits', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
 					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts: allPosts, relatedPosts: categoryWisePosts });
 
-				} else
+				} else if (resp[0].layout === 'blog') {
+					let allBlogs = await onAppQuery('contents', '*', `WHERE content_type = 'blog'`);
+					res.render('index', { bodyData: resp[0], response: menuTree });
+				}
+				else
 					res.render('index', { bodyData: resp[0], response: menuTree });
 			}
 			else next(createError(404, 'This Content does not exist!', { extraProp: "Error Layout Data " }));
