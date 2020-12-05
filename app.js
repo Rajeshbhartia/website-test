@@ -61,6 +61,29 @@ function createSubMenu(ele, array) {
 	}
 }
 
+
+function makeDateWisePost(posts) {
+	let obj = {}
+	const monthNames = ["January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	];
+	posts.forEach(item => {
+		let year = new Date(item.creation_date).getFullYear()
+		let month = monthNames[new Date(item.creation_date).getMonth()];
+		if (obj.hasOwnProperty(year)) {
+			if (obj[year].hasOwnProperty(month)) {
+				obj[year][month].push(item)
+			} else {
+				obj[year][month] = [item];
+			}
+		} else {
+			obj[year] = {}
+			obj[year][month] = [item]
+		}
+	})
+	return obj;
+}
+
 (async function GeneratePage() {
 	let fResp = await onAppQuery('contents', 'path,name,menu,menu_order,sub_menu,sub_menu_order', `WHERE menu = 'yes'`);
 	let menuTree = [];
@@ -82,22 +105,27 @@ function createSubMenu(ele, array) {
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
-					let categories = new Set();
-
 					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
 					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' ORDER BY creation_date desc LIMIT 5`);
-
+					let categories = new Set();
 					docsResp.forEach(item => categories.add(item.category));
-
 					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp, popularPosts: popularPosts, recentPosts: recentPosts });
 				} else if (resp[0].layout === 'doc_details') {
 					let categoryWisePosts = await onAppQuery('contents', 'name,path', `WHERE category = '${resp[0].category}'`);
 					let allPosts = await onAppQuery('contents', 'name,path,hits', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
 					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts: allPosts, relatedPosts: categoryWisePosts });
-
 				} else if (resp[0].layout === 'blog') {
-					let allBlogs = await onAppQuery('contents', '*', `WHERE content_type = 'blog'`);
-					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs });
+					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' ORDER BY creation_date desc`);
+					let cwds = {}
+					allBlogs.forEach(item => {
+						if (cwds.hasOwnProperty(item.category)) {
+							cwds[item.category].push(item)
+						} else {
+							cwds[item.category] = [item]
+						}
+					})
+					let yearWiseData = makeDateWisePost(allBlogs);
+					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs, catData: cwds, yearWiseData });
 				} else if (resp[0].layout === 'blog_details') {
 					let allBlogs = await onAppQuery('contents', 'name,path,category', `WHERE content_type = 'blog'`);
 					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs });

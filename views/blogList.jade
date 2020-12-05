@@ -1,0 +1,16 @@
+.col-md-8
+	each item in allBlogs
+		.details.py-4.shadow.px-3.mb-5
+			a(href=`${item.path}`)
+				h4= item.name
+			p.font-italic.pb-2
+				| Posted #{item.creation_date} by 
+				a(href="#")=item.post_author
+				|  & filed under 
+				a(href=`#`)= item.category
+				| .
+			.content
+				if item.post_image
+					img.img-fluid.mx-auto.d-block.mb-3(src=item.post_image)
+				p= item.post_heading
+				a.btn.btn-danger(href=`${item.path}`) Read More

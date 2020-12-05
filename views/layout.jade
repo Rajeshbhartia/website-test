@@ -44,6 +44,12 @@ html
 				include ./docsNotFound.jade
 				include ./../layouts/footer.html
 
+			when "blog"
+				include ./header.jade
+				include ./supportSmallSearch.jade
+				include ./blogContent.jade
+				include ./../layouts/footer.html
+
 			default
 				include ./header.jade
 				block content

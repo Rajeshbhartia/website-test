@@ -1,0 +1,59 @@
+script. 
+	const handleArchiveMenu = (event) => {
+		let el = "";
+
+		if (event.target.tagName === 'I') {
+			el = event.target.parentElement.parentNode.querySelector('.submenu');
+		} else {
+			el = event.target.parentNode.querySelector('.submenu');
+		}
+
+		el.classList.toggle("submenu--show");
+	}
+
+.col-md-4
+	.single-category.shadow.py-4.mb-4
+		h5.pb-2.text-center RECENT POSTS
+		ul
+			each item in allBlogs
+				li
+					a(href=`${item.path}`)= item.name
+
+	.single-category.archive-menu.shadow.py-4.mb-4
+		h5.pb-2.text-center ARCHIVE
+		ul
+			each yearVal, year in yearWiseData
+				li(onclick='{handleArchiveMenu(event)}')
+					a(href="javascript:;")
+						i.fas.fa-caret-right.mr-1
+						| #{year}
+					ul.submenu
+						each monthVal, month in yearVal
+							li
+								a(href="javascript:;")
+									i.fas.fa-caret-right.mr-1
+									| #{month}
+
+								ul.submenu
+									each item in monthVal
+										li
+											a(href=item.path)
+												i.mr-1
+												| #{item.name}
+
+
+	.single-category.archive-menu.shadow.py-4.mb-4
+		h5.pb-2.text-center CATEGORIES
+		ul
+			each catagory, key in catData
+				li(onclick='{handleArchiveMenu(event)}')
+					a(href="javascript:;")
+						i.fas.fa-caret-right.mr-1
+						| #{key}
+					ul.submenu
+						each item in catagory
+							li
+								a(href=item.path)
+									i.mr-1
+									| #{item.name}
+
