@@ -19,11 +19,6 @@ html
 	body
 
 		case bodyData.layout
-			when "primary"
-				include ./header.jade
-				block content
-				include ./../layouts/footer.html
-
 			when "support_home"
 				include ./header.jade
 				include ./supportSearch.jade
@@ -48,6 +43,12 @@ html
 				include ./header.jade
 				include ./supportSmallSearch.jade
 				include ./blogContent.jade
+				include ./../layouts/footer.html
+
+			when "blog_details"
+				include ./header.jade
+				include ./supportSmallSearch.jade
+				include ./blogSingleContent.jade
 				include ./../layouts/footer.html
 
 			default

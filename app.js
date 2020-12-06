@@ -101,31 +101,30 @@ function makeDateWisePost(posts) {
 
 	app.use(async (req, res, next) => {
 		try {
-			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}'`);
+			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}' AND status= 'published'`);
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
-					console.log("object");
 
-					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}'`);
+					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}' AND status= 'published'`);
 					let categories = new Set();
 					docsResp.forEach(item => categories.add(item.category));
 
-					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
-					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' ORDER BY creation_date desc LIMIT 5`);
+					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
+					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY creation_date desc LIMIT 5`);
 
 
 					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp, popularPosts, recentPosts });
 				} else if (resp[0].layout === 'doc_details') {
 
-					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}'`);
+					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}' AND status= 'published'`);
 					let categories = new Set();
 					docsResp.forEach(item => categories.add(item.category));
 
-					let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' ORDER BY hits desc LIMIT 5`);
+					let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
 					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories) });
 
-				} else if (resp[0].layout === 'blog') {
-					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' ORDER BY creation_date desc`);
+				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
+					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' AND status= 'published' ORDER BY creation_date desc`);
 					let cwds = {}
 					allBlogs.forEach(item => {
 						if (cwds.hasOwnProperty(item.category)) {
@@ -136,9 +135,6 @@ function makeDateWisePost(posts) {
 					})
 					let yearWiseData = makeDateWisePost(allBlogs);
 					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs, catData: cwds, yearWiseData });
-				} else if (resp[0].layout === 'blog_details') {
-					let allBlogs = await onAppQuery('contents', 'name,path,category', `WHERE content_type = 'blog'`);
-					res.render('index', { bodyData: resp[0], response: menuTree, allBlogs });
 				}
 				else
 					res.render('index', { bodyData: resp[0], response: menuTree });

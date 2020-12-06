@@ -1,0 +1,24 @@
+.document-category.py-5
+    .container
+        .row
+            .col-md-8
+                .details
+                    h1= bodyData.name
+                    p.font-italic.pb-2
+                        | Posted #{bodyData.creation_date} by 
+                        a(href="#") #{bodyData.post_author}
+                        |  & filed under 
+                        a(href=`#`) #{bodyData.category}
+                        | .
+                    .content 
+                        | !{bodyData.content}
+
+                    .share.border-top-1
+                        hr.mt-3.mb-3
+                        p.mb-0 Share This
+                        a(href="#")
+                            i(class="fab fa-facebook")
+                        a(href="#")
+                            i(class="fab fa-facebook")
+
+            include ./blogRightContent
