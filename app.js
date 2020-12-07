@@ -34,33 +34,45 @@ function onAppQuery(tableName, columns, args) {
 		}
 	})
 }
-function createSubMenu(ele, array) {
-	const sourceStr = ele.path;
-	// let array = [...arr];
 
-	const searchStr = '/';
-	const indexes = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(a => a.index);
-	let pPath = sourceStr.substring(indexes[0] + 1, indexes[1]);
-	pPath = pPath.replace(/\b\w/g, l => l.toUpperCase());
-	const found = array.find(element => element.name === pPath);
-	if (found) {
-		found.submenu.push(ele);
-		found.submenu.sort((a, b) => {
-			return a.menu_order - b.menu_order
-		});
 
+function createSubMenu(ele, path, menuTree) {
+	let steps = path.split('/');
+	steps.shift();
+	let fSt = steps[0]
+	if (steps.length === 1) {
+		if (!menuTree[fSt]) {
+			menuTree[fSt] = {}
+			menuTree[fSt].name = fSt
+			menuTree[fSt].path = "#"
+			menuTree[fSt].menuSet = new Set()
+			menuTree[fSt].menuSet.add(ele);
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+		} else {
+			menuTree[fSt].menuSet.add(ele)
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+		}
 	} else {
-		let elem = {}
-		elem.name = pPath;
-		elem.path = "#";
-		elem.menu = ele.menu;
-		elem.menu_order = ele.menu_order;
-		elem.submenu = [];
-		elem.submenu.push(ele)
-		array.push(elem);
+		let ind = path.indexOf(steps[1])
+		let nPath = ''
+		if (ind > 0)
+			nPath = '/' + path.substring(ind)
+		if (!menuTree[fSt]) {
+			menuTree[fSt] = {}
+			menuTree[fSt].name = fSt
+			menuTree[fSt].path = "#"
+			let c = createSubMenu(ele, nPath, menuTree[fSt])
+			menuTree[fSt].menuSet = new Set()
+			menuTree[fSt].menuSet.add(c);
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+		} else {
+			let c = createSubMenu(ele, nPath, menuTree[fSt])
+			menuTree[fSt].menuSet.add(c);
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+		}
 	}
+	return menuTree[fSt]
 }
-
 
 function makeDateWisePost(posts) {
 	let obj = {}
@@ -85,17 +97,17 @@ function makeDateWisePost(posts) {
 }
 
 (async function GeneratePage() {
-	let fResp = await onAppQuery('contents', 'path,name,menu,menu_order,sub_menu,sub_menu_order', `WHERE menu = 'yes'`);
-	let menuTree = [];
+	let fResp = await onAppQuery('contents', 'path,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL`);
+	let menuTree = {};
 	fResp = fResp.sort((a, b) => {
 		return a.menu_order - b.menu_order
 	})
 
 	fResp.forEach(element => {
-		if (element.sub_menu === 'yes') {
-			createSubMenu(element, menuTree)
+		if (element.menu_path !== '/') {
+			createSubMenu(element, element.menu_path, menuTree)
 		} else {
-			menuTree.push(element)
+			menuTree[element.name] = element
 		}
 	});
 
