@@ -19,7 +19,7 @@ script.
 		var dataObj = !{JSON.stringify(docsResp)}
 		dataObj.map((item) => {
 			console.log(item.category, currentTarget.innerText)
-			if(item.category === currentTarget.innerText.toLowerCase()) {
+			if(item.category.toLowerCase() === currentTarget.innerText.toLowerCase()) {
 				categoryItem.innerHTML += `<li><a href="${item.path}">${item.name}</a></li>`
 			}
 		})
@@ -34,7 +34,7 @@ script.
 					a(href='/') Home
 				li.breadcrumb-item
 					a(href='/support') Support
-				li.breadcrumb-item.text-capitalize.active(aria-current='page')= bodyData.path.substring(1)
+				li.breadcrumb-item.text-capitalize.active(aria-current='page')= bodyData.name
 
 		.row
 			.col-md-4
