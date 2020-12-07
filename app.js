@@ -117,7 +117,7 @@ function makeDateWisePost(posts) {
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 
-					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${req.path.substring(1)}' AND status= 'published'`);
+					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${resp[0].name.toLowerCase()}' AND status= 'published'`);
 					let categories = new Set();
 					docsResp.forEach(item => categories.add(item.category));
 
