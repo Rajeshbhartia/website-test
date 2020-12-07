@@ -35,6 +35,9 @@ function onAppQuery(tableName, columns, args) {
 	})
 }
 
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
 
 function createSubMenu(ele, path, menuTree) {
 	let steps = path.split('/');
@@ -43,7 +46,7 @@ function createSubMenu(ele, path, menuTree) {
 	if (steps.length === 1) {
 		if (!menuTree[fSt]) {
 			menuTree[fSt] = {}
-			menuTree[fSt].name = fSt
+			menuTree[fSt].name = capitalize(fSt)
 			menuTree[fSt].path = "#"
 			menuTree[fSt].menuSet = new Set()
 			menuTree[fSt].menuSet.add(ele);
