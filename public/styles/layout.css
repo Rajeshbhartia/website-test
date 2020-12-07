@@ -54,7 +54,7 @@ a:hover {
 }
 
 .custom-nav {
-    justify-content: initial;
+    justify-content: space-between;
 }
 
 .nav-item .nav-link {
