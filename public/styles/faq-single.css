@@ -1,3 +1,25 @@
 .document-category .not-found {
 	background-color: rgb(240, 239, 241);
 }
+
+.custom-acc {
+	text-decoration: none !important;
+	text-transform: capitalize;
+	display: flex;
+    align-items: center;
+	justify-content: space-between;
+	padding: 12px;
+	color: #1e528a;
+	font-size: 1.4rem;
+}
+.document-category .lead {
+	font-size: 16px;
+}
+
+.details a {
+	color: #1e528a;
+}
+
+.details a:hover {
+	color: #2a7bff;
+}

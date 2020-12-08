@@ -170,7 +170,11 @@ a:hover {
 		top: 10px;
 		z-index: 999;
 		left: 90px;
-	}
+    }
+    
+    .navbar-wrapper {
+        width: 100%;
+    }
 }
 
 /************ footer top *************/

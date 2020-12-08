@@ -1,4 +1,3 @@
-//- - console.log(docsResp, categories, bodyData);
 script.
 
 	var handleCategory = (event) => {
@@ -18,7 +17,6 @@ script.
 
 		var dataObj = !{JSON.stringify(docsResp)}
 		dataObj.map((item) => {
-			console.log(item.category, currentTarget.innerText)
 			if(item.category.toLowerCase() === currentTarget.innerText.toLowerCase()) {
 				categoryItem.innerHTML += `<li><a href="${item.path}">${item.name}</a></li>`
 			}
@@ -29,7 +27,7 @@ script.
 	.container
 
 		nav
-			ol.breadcrumb
+			ol.breadcrumb.breadcrumb-custom
 				li.breadcrumb-item
 					a(href='/') Home
 				li.breadcrumb-item
@@ -47,11 +45,11 @@ script.
 
 			.col-md-5
 				.box.py-4.ml-md-4
-					h5#category-name.pb-2= categories[0]
+					h5#category-name.pb-2.text-capitalize= categories[0]
 					ul
 						#category-item
 							each item in docsResp
-								if categories[0] === item.category
+								if categories[0].toLowerCase() === item.category.toLowerCase()
 									li
 										a(href= item.path)= item.name
 

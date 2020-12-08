@@ -36,7 +36,7 @@ function onAppQuery(tableName, columns, args) {
 }
 
 function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function createSubMenu(ele, path, menuTree) {
@@ -50,10 +50,10 @@ function createSubMenu(ele, path, menuTree) {
 			menuTree[fSt].path = "#"
 			menuTree[fSt].menuSet = new Set()
 			menuTree[fSt].menuSet.add(ele);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		} else {
 			menuTree[fSt].menuSet.add(ele)
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		}
 	} else {
 		let ind = path.indexOf(steps[1])
@@ -67,11 +67,11 @@ function createSubMenu(ele, path, menuTree) {
 			let c = createSubMenu(ele, nPath, menuTree[fSt])
 			menuTree[fSt].menuSet = new Set()
 			menuTree[fSt].menuSet.add(c);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		} else {
 			let c = createSubMenu(ele, nPath, menuTree[fSt])
 			menuTree[fSt].menuSet.add(c);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		}
 	}
 	return menuTree[fSt]
@@ -120,23 +120,34 @@ function makeDateWisePost(posts) {
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 
-					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${resp[0].name.toLowerCase()}' AND status= 'published'`);
+					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].name.toLowerCase()}' AND status= 'published' ORDER BY creation_date asc`);
 					let categories = new Set();
-					docsResp.forEach(item => categories.add(item.category));
+					docsResp.forEach(item => categories.add(item.category.toLowerCase()));
 
 					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
 					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY creation_date desc LIMIT 5`);
 
 
-					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp, popularPosts, recentPosts });
+					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories).sort(), docsResp, popularPosts, recentPosts });
 				} else if (resp[0].layout === 'doc_details') {
 
-					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}' AND status= 'published'`);
+
+					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}' AND status= 'published' ORDER BY creation_date asc`);
+
+					// let categoryItems = docsResp.forEach(item => {
+
+					// 	if (item.category === resp[0].category) {
+					// 		categoryItems.push(item);
+					// 	}
+					// })
+
+					// console.log(categoryItems);
+
 					let categories = new Set();
-					docsResp.forEach(item => categories.add(item.category));
+					docsResp.forEach(item => categories.add(item.category.toLowerCase()));
 
 					let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
-					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories) });
+					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories).sort() });
 
 				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
 					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' AND status= 'published' ORDER BY creation_date desc`);
