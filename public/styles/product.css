@@ -131,3 +131,10 @@
 .pht-nav-link.active{
     border-bottom: 4px solid var(--primary);
 }
+
+@media screen and (max-width: 767px) {  
+    .each-pro-wra {
+        margin: 0px;
+        margin-top: 32px;
+    }
+}

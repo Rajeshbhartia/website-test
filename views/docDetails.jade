@@ -2,7 +2,7 @@
 	.container
 
 		nav
-			ol.breadcrumb
+			ol.breadcrumb.breadcrumb-custom
 				li.breadcrumb-item
 					a(href='/') Home
 				li.breadcrumb-item
@@ -22,17 +22,19 @@
 				.category-dropdown
 					#accordionExample.accordion
 						each item in categories
-							-var idName = item.replace(/ /g, "");
+							-var idName = item.replace(/ /g, "").replace(/,/g, "").replace(/&/g, "");
 
 							.card
-								.card-header
+								//- .card-header
 								h2.mb-0
-									button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target=`#${idName}`)= item
+									button.btn.custom-acc.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target=`#${idName}`)
+										span= item
+										i.fas.fa-angle-down.rotate-icon
 								div(class="collapse" id= idName aria-labelledby='headingOne' data-parent='#accordionExample')
 									.card-body.p-0
 										ul
 											each singleDocs in docsResp
-												if singleDocs.category === item
+												if singleDocs.category.toLowerCase() === item.toLowerCase()
 													li
 														a.pl-4(href= singleDocs.path)= singleDocs.name
 

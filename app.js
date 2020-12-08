@@ -124,23 +124,34 @@ function makeDateWisePost(posts) {
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 
-					let docsResp = await onAppQuery('contents', '*', `WHERE post_type = '${resp[0].name.toLowerCase()}' AND status= 'published'`);
+					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].name.toLowerCase()}' AND status= 'published' ORDER BY creation_date asc`);
 					let categories = new Set();
-					docsResp.forEach(item => categories.add(item.category));
+					docsResp.forEach(item => categories.add(item.category.toLowerCase()));
 
 					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
 					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY creation_date desc LIMIT 5`);
 
 
-					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories), docsResp, popularPosts, recentPosts });
+					res.render('index', { bodyData: resp[0], response: menuTree, categories: Array.from(categories).sort(), docsResp, popularPosts, recentPosts });
 				} else if (resp[0].layout === 'doc_details') {
 
-					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}' AND status= 'published'`);
+
+					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}' AND status= 'published' ORDER BY creation_date asc`);
+
+					// let categoryItems = docsResp.forEach(item => {
+
+					// 	if (item.category === resp[0].category) {
+					// 		categoryItems.push(item);
+					// 	}
+					// })
+
+					// console.log(categoryItems);
+
 					let categories = new Set();
-					docsResp.forEach(item => categories.add(item.category));
+					docsResp.forEach(item => categories.add(item.category.toLowerCase()));
 
 					let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
-					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories) });
+					res.render('index', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories).sort() });
 
 				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
 					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' AND status= 'published' ORDER BY creation_date desc`);

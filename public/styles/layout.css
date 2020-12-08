@@ -216,6 +216,9 @@ a:hover {
         position: absolute;
         right: 0;
         top: 15px;
+	}    
+    .navbar-wrapper {
+        width: 100%;
     }
 }
 
