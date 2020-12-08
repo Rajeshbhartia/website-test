@@ -6,7 +6,9 @@ $("#live-chat").click(function () {
 $("#live-chat-2").click(function () {
 	$(".zsiq_float").click();
 });
-
+$("#live-chat-3").click(function () {
+	$(".zsiq_float").click();
+});
 // counter
 (function ($) {
 	$.fn.countTo = function (options) {
@@ -109,6 +111,7 @@ jQuery(function ($) {
 
 function redirect(pageName) {
 	window.location.href = `/${pageName}`
+	window.location.target = '_black'
 }
 
 // menu collepse
@@ -241,18 +244,18 @@ $(document).ready(() => {
 
 
 
-$('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
-	if (!$(this).next().hasClass('show')) {
-	  $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
-	}
-	var $subMenu = $(this).next(".dropdown-menu");
-	$subMenu.toggleClass('show');
+// $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+// 	if (!$(this).next().hasClass('show')) {
+// 	  $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+// 	}
+// 	var $subMenu = $(this).next(".dropdown-menu");
+// 	$subMenu.toggleClass('show');
   
   
-	$(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
-	  $('.dropdown-submenu .show').removeClass("show");
-	});
+// 	$(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+// 	  $('.dropdown-submenu .show').removeClass("show");
+// 	});
   
   
-	return false;
-  });
+// 	return false;
+//   });
