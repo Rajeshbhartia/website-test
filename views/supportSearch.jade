@@ -1,0 +1,31 @@
+.support-search
+	.container
+		.text-white.text-center.py-5
+			case bodyData.name
+				when "FAQ"
+					h1.text-uppercase FAQ
+					p Get answer for almost all questions about SBO, SyncSwitch, installation & configurations.
+
+				when "Installation"
+					h1.text-uppercase Installation
+					p Step by step procedure of installing and configuring SBO and SyncSwitch by graphical and video presentations.
+
+				when "Troubleshooting"
+					h1.text-uppercase Troubleshooting
+					p Solution for commonly faced issues in SBO, SyncSwitch and third party hardware/softwares.
+
+				default
+					if bodyData.name === "Support"
+						h1.text-uppercase Articles
+						p If you have any query you can look for it from here.
+					else 
+						h4= bodyData.name
+
+
+
+
+
+
+			//- form.form-inline.my-2.mt-5.justify-content-center
+			//- 	input.form-control.mr-sm-2.search-box(type="text" placeholder= "Type something here.....")
+			//- 	button.btn.btn-danger.my-2.my-sm-0(type='submit') Search

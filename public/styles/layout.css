@@ -1,200 +1,254 @@
 body {
-	margin: 0px;
-	padding: 0px;
-	font-family: raleway, helvetica, arial;
-	line-height: 27px;
+    margin: 0px;
+    padding: 0px;
+    font-family: raleway, helvetica, arial;
+    line-height: 27px;
 }
 
 button:focus {
-	outline: none;
+    outline: none;
 }
 
 /* color */
 
 :root {
-	--primary: #005087;
-	--secondary: #FF8B00;
-	--white: #fff;
-	--gray: #6c757d;
-	--gray-dark: #343a40;
-	--success: #28a745;
-	--info: #17a2b8;
-	--warning: #ffc107;
-	--danger: #E10050;
-	--light: #f8f9fa;
-	--dark: #343a40;
-	--primary-light: rgba(45, 156, 219, 0.2);
-	--home2background: #2D9CDB
+    --primary: #005087;
+    --secondary: #FF8B00;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #E10050;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --primary-light: rgba(45, 156, 219, 0.2);
+    --home2background: #2D9CDB;
 }
 
 /* reset */
 
 ul {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 li {
-	list-style: none;
+    list-style: none;
 }
 
 a:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 /************ header **************/
 
 .header {
-	background: var(--white);
+    background: var(--white);
 }
 
 .header .dropdown-menu {
-	border: none;
-	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .custom-nav {
-	justify-content: initial;
+    justify-content: space-between;
 }
 
 .nav-item .nav-link {
-	padding-right: 1rem !important;
+    padding-right: 1rem !important;
 }
 
 .nav-item .nav-link:hover::after {
-	border-color: rgba(0, 0, 0, .7);
+    border-color: rgba(0, 0, 0, 0.7);
 }
 
 .dropdown-toggle {
-	position: relative;
+    position: relative;
 }
 
 .dropdown-toggle::after {
-	/* border: none!important;
-	font: normal normal normal 14px/1 FontAwesome;
-	content: "\f107"!important;
-	vertical-align: 0; */
-	border: solid rgba(0, 0, 0, .5);
-	border-width: 0 2px 2px 0;
-	display: inline-block;
-	padding: 2.5px;
-	transform: rotate(45deg) translateY(3px);
-	-webkit-transform: rotate(45deg) translate(3px);
+    /* border: none!important;
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f107"!important;
+    vertical-align: 0; */
+    border: solid rgba(0, 0, 0, 0.5);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 2.5px;
+    transform: rotate(45deg) translateY(3px);
+    -webkit-transform: rotate(45deg) translate(3px);
 }
 
 .main-menu,
 .right-section {
-	height: 100%;
+    height: 100%;
 }
 
 .main-menu,
 .right-section .cart button,
 .header .account-menu button {
-	border: none;
-	background-color: transparent;
+    border: none;
+    background-color: transparent;
 }
 
 .header .account-menu {
-	position: relative;
-	line-height: 40px;
+    position: relative;
+    line-height: 40px;
 }
 
 .header .account-menu img {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .custom-badge {
-	position: absolute;
-	top: -8px;
-	background: #F7941E;
-	right: -8px;
-	color: var(--white);
+    position: absolute;
+    top: -8px;
+    background: #F7941E;
+    right: -8px;
+    color: var(--white);
 }
 
+.header-portal {
+    color:var(--primary);
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid var(--primary);
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+.header-portal:hover{
+    border: 1px solid var(--danger);
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu a::after {
+    transform: rotate(-45deg);
+    position: absolute;
+    right: 6px;
+    top: .8em;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: .1rem;
+    margin-right: .1rem;
+}
+
+.dropdown-item:focus, .dropdown-item:hover, .dropdown-item.active, .dropdown-item:active {
+    background-color: var(--primary);
+    color: #fff;
+}
+.stl-btn a{
+    color: white;
+}
+.stl-btn a:hover{
+    color: white;
+}
 /* cart design */
 .right-section .cart-box {
-	position: absolute;
-	width: 300px;
-	background-color: white;
-	border-radius: 4px;
-	top: 35px;
-	right: 0;
+    position: absolute;
+    width: 300px;
+    background-color: white;
+    border-radius: 4px;
+    top: 35px;
+    right: 0;
 }
 
 .right-section .cart-box .cart-header {
-	background-color: #F0F0F0;
+    background-color: #F0F0F0;
 }
 
 .right-section .cart-box .cart-footer a {
-	background-color: var(--primary);
+    background-color: var(--primary);
 }
 
 /* account cart design */
 .header .account-cart-box {
-	min-width: 300px;
-	position: absolute;
-	top: 40px;
-	right: 0;
-	background-color: var(--white);
-	border-radius: 4px;
+    min-width: 300px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: var(--white);
+    border-radius: 4px;
 }
 
 .header .account-cart-box img {
-	width: 70px;
-	height: 70px;
+    width: 70px;
+    height: 70px;
 }
 
-
 @media (max-width: 991.98px) {
-	.custom-nav {
-		justify-content: flex-end;
-		flex-direction: row-reverse;
-	}
+    .custom-nav {
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+    }
 
-	.right-section {
-		height: auto;
-		position: absolute;
-		top: 11px;
-		right: 0;
-	}
+    .right-section {
+        height: auto;
+        position: absolute;
+        top: 11px;
+        right: 0;
+    }
 
-	.dropdown-toggle::after {
-		position: absolute;
-		top: 13px;
-		right: 10px;
-	}
+    .dropdown-toggle::after {
+        position: absolute;
+        top: 13px;
+        right: 10px;
+    }
+
+    .header-icon {
+        position: absolute;
+        top: 10px;
+        z-index: 999;
+        left: 90px;
+    }
+    .header-portal{
+        position: absolute;
+        right: 0;
+        top: 15px;
+	}    
+    .navbar-wrapper {
+        width: 100%;
+    }
 }
 
 /************ footer top *************/
 
 .footer-top {
-	background-color: #1B1642;
-	padding: 50px 0;
+    background-color: #1B1642;
+    padding: 50px 0;
 }
 
 .footer-link {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 .footer-top ul li a {
-	color: white;
+    color: white;
 }
 
 /************ footer *************/
 
 .footer {
-	background-color: black;
+    background-color: black;
 }
 
 .footer-logo {
-	width: 50px;
+    width: 50px;
 }
 
 .social a {
-	color: white;
-	font-size: 24px;
-	margin-right: 8px;
+    color: white;
+    font-size: 24px;
+    margin-right: 8px;
 }

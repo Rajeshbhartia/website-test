@@ -1,0 +1,69 @@
+script.
+
+	var handleCategory = (event) => {
+		let currentTarget = event.currentTarget
+
+		if(currentTarget.classList.contains('active')) return
+
+		let activeItem = currentTarget.parentElement.parentElement.querySelector('.active')
+		activeItem.classList.remove('active')
+		currentTarget.classList.add('active')
+
+		var categoriesArr = !{JSON.stringify(categories)}
+
+		let categoryItem = document.getElementById('category-item')
+		document.getElementById('category-name').innerText = currentTarget.innerText
+		categoryItem.innerHTML = ""
+
+		var dataObj = !{JSON.stringify(docsResp)}
+		dataObj.map((item) => {
+			if(item.category.toLowerCase() === currentTarget.innerText.toLowerCase()) {
+				categoryItem.innerHTML += `<li><a href="${item.path}">${item.name}</a></li>`
+			}
+		})
+	}
+
+.document-category.py-5
+	.container
+
+		nav
+			ol.breadcrumb.breadcrumb-custom
+				li.breadcrumb-item
+					a(href='/') Home
+				li.breadcrumb-item
+					a(href='/support') Support
+				li.breadcrumb-item.text-capitalize.active(aria-current='page')= bodyData.name
+
+		.row
+			.col-md-4
+				.single-category.shadow.py-4
+					h5.pb-2.text-center CATEGORIES
+					ul
+						each item in categories
+							li
+								a(href="javascript:;" onclick='handleCategory(event)' class=categories[0]==item? "active": null)= item
+
+			.col-md-5
+				.box.py-4.ml-md-4
+					h5#category-name.pb-2.text-capitalize= categories[0]
+					ul
+						#category-item
+							each item in docsResp
+								if categories[0].toLowerCase() === item.category.toLowerCase()
+									li
+										a(href= item.path)= item.name
+
+			.col-md-3
+				.box.py-4.ml-md-4
+					h5.pb-2 Most Popular Topics
+					ul
+						each item in popularPosts
+							li
+								a(href= item.path)= item.name
+
+				.box.py-4.ml-md-4
+					h5.pb-2 Recently Added
+					ul
+						each item in recentPosts
+							li
+								a(href= item.path)= item.name
