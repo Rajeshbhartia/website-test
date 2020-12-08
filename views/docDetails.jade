@@ -1,3 +1,4 @@
+- var localVal = 0;
 .document-category.py-5
 	.container
 
@@ -18,6 +19,18 @@
 					h1.pb-2= bodyData.name
 					#answer-content.content
 						| !{bodyData.content}
+					.prev-next.py-5
+						h2 Post navigation
+
+						if prevNextPost[0]
+							a.d-block(href=prevNextPost[0].path)
+								i.fas.fa-long-arrow-alt-left.mr-1
+								= prevNextPost[0].name
+
+						if prevNextPost[1]
+							a.d-block(href=prevNextPost[1].path)
+								= prevNextPost[1].name
+								i.fas.fa-long-arrow-alt-right.ml-1
 
 				.category-dropdown
 					#accordionExample.accordion
@@ -44,9 +57,10 @@
 					h5.pb-2.text-center Related Articles
 					ul
 						each item in docsResp
-							if item.category === bodyData.category
+							if localVal < 5 && item.category === bodyData.category && item.path !== bodyData.path
 								li
 									a(href= item.path)= item.name
+									- localVal++;
 
 				.single-category.shadow.py-4.mb-4
 					h5.pb-2.text-center Popular Articles
