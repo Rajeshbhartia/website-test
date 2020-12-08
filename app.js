@@ -36,7 +36,7 @@ function onAppQuery(tableName, columns, args) {
 }
 
 function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function createSubMenu(ele, path, menuTree) {
@@ -50,10 +50,10 @@ function createSubMenu(ele, path, menuTree) {
 			menuTree[fSt].path = "#"
 			menuTree[fSt].menuSet = new Set()
 			menuTree[fSt].menuSet.add(ele);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		} else {
 			menuTree[fSt].menuSet.add(ele)
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		}
 	} else {
 		let ind = path.indexOf(steps[1])
@@ -67,11 +67,11 @@ function createSubMenu(ele, path, menuTree) {
 			let c = createSubMenu(ele, nPath, menuTree[fSt])
 			menuTree[fSt].menuSet = new Set()
 			menuTree[fSt].menuSet.add(c);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		} else {
 			let c = createSubMenu(ele, nPath, menuTree[fSt])
 			menuTree[fSt].menuSet.add(c);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet); 
+			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
 		}
 	}
 	return menuTree[fSt]
@@ -100,7 +100,7 @@ function makeDateWisePost(posts) {
 }
 
 (async function GeneratePage() {
-	let fResp = await onAppQuery('contents', 'path,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL`);
+	let fResp = await onAppQuery('contents', 'path,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
 	let menuTree = {};
 	fResp = fResp.sort((a, b) => {
 		return a.menu_order - b.menu_order
@@ -116,7 +116,11 @@ function makeDateWisePost(posts) {
 
 	app.use(async (req, res, next) => {
 		try {
-			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}' AND status= 'published'`);
+			// word.endsWith("e")
+			let path = req.path;
+			if (path.endsWith("/") && path.length > 1) path = path.substring(0, path.length - 1)
+
+			let resp = await onAppQuery('contents', '*', `WHERE path = '${path}' AND status= 'published'`);
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 

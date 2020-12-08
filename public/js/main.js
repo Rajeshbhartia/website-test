@@ -3,6 +3,9 @@ $("#live-chat").click(function () {
 	$(".zsiq_float").click();
 });
 
+$("#live-chat-2").click(function () {
+	$(".zsiq_float").click();
+});
 
 // counter
 (function ($) {
