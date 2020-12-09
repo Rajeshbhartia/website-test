@@ -40,7 +40,7 @@
 .pst-content{
     font-size: 32px;
     color: var(--white);
-    padding: 64px 0px;
+    padding: 0px 0px 64px 0px;
     text-align: center;
 }
 
