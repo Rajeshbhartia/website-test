@@ -16,7 +16,7 @@ const pool = mariadb.createPool({
 	user: 'root',
 	password: 'root',
 	//  connectionLimit: 5,
-	database: 'db_sbo'
+	database: 'website_test'
 });
 
 function onAppQuery(tableName, columns, args) {
