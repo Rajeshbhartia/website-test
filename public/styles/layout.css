@@ -5,6 +5,7 @@ body {
     line-height: 27px;
 }
 
+
 button:focus {
     outline: none;
 }
@@ -27,6 +28,11 @@ button:focus {
     --home2background: #2D9CDB;
 }
 
+.btn-primary {
+    color: #fff;
+    background-color:var(--primary);
+    border-color: var(--primary)
+}
 /* reset */
 
 ul {

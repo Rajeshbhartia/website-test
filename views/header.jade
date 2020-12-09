@@ -12,8 +12,8 @@ mixin subMenu(menuName, menuLink, subMenu)
 mixin menuTree(menuName, menuLink, subMenu)
 	if subMenu
 		li.nav-item.dropdown
-			a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' aaria-expanded="false")= menuName
-			ul.dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
+			a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' aria-expanded="false")= menuName
+			ul.dropdown-menu
 				each item,key in subMenu
 					+subMenu(item.name, item.path, item.submenu)
 	else
