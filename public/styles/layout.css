@@ -236,7 +236,10 @@ a:hover {
 .footer-top ul li a {
     color: white;
 }
-
+.paypal {
+    margin-left: -20px;
+    margin-top: 8px;
+}
 /************ footer *************/
 
 .footer {

@@ -14,10 +14,13 @@
 	color: #2a7bff;
 }
 
+.single-category ul li a {
+	text-transform: capitalize;
+}
+
 .document-category ul li a {
 	font-size: 16px;
 	display: block;
-	text-transform: capitalize;
 	padding: 8px 15px;
 	text-align: left;
 	color: #1e528a;
@@ -37,7 +40,6 @@
 .document-category .box ul li a {
 	font-size: 16px;
 	display: block;
-	text-transform: capitalize;
 	padding: 8px 0;
 	line-height: 20px;
 }
