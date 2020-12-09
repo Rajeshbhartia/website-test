@@ -12,7 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 //connect with database
 const mariadb = require('mariadb');
 const pool = mariadb.createPool({
-	host: 'localhost',
+	host: '192.168.207.45',
+	// host: 'localhost',
 	user: 'root',
 	password: 'root',
 	//  connectionLimit: 5,
