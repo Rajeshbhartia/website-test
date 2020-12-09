@@ -57,6 +57,12 @@ html
 				include ./blogSingleContent.jade
 				include ./../layouts/footer.html
 
+			when "contact_us"
+				include ./header.jade
+				block content
+				include ./docsNotFound.jade
+				include ./../layouts/footer.html
+
 			default
 				include ./header.jade
 				block content

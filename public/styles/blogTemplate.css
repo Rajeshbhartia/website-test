@@ -13,3 +13,10 @@
 .archive-menu .submenu.submenu--show{
     display: block;
 }
+
+a.blog-read-more-btn{
+    color: #fff;
+}
+a.blog-read-more-btn:hover{
+    color: #fff;
+}

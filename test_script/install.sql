@@ -1,4 +1,5 @@
-<div>
+insert into contents set name=concat('Post Created at ', CAST(RAND()*100000000 AS int)), path=concat('/docs/', CAST(RAND()*100000000 AS int)), content_type='post', menu_path='', menu_order=0, layout='doc_details', 
+content='<div>
     <div>
         Nunc consequat purus sit amet erat volutpat, ut placerat nisi faucibus. Nulla facilisi. Curabitur fermentum arcu sed
         erat gravida, eu varius sem iaculis. In hac habitasse platea dictumst. Ut vulputate felis justo, sit amet venenatis
@@ -39,7 +40,7 @@
         quis lectus a arcu ultricies ultrices.
     
     </div>
-    <img src="/images/artwork/Lorenzo_Garcia_01.jpg" />
+    <img src="/images/artwork/Lorenzo_Garcia_03.jpg" />
 
     <div>
         Nunc consequat purus sit amet erat volutpat, ut placerat nisi faucibus. Nulla facilisi. Curabitur fermentum arcu sed
@@ -81,7 +82,7 @@
         quis lectus a arcu ultricies ultrices.
     
     </div>
-    <img src="/images/artwork/Lorenzo_Garcia_01.jpg" />
+    <img src="/images/artwork/Lorenzo_Garcia_03.jpg" />
     <div>
         Nunc consequat purus sit amet erat volutpat, ut placerat nisi faucibus. Nulla facilisi. Curabitur fermentum arcu sed
         erat gravida, eu varius sem iaculis. In hac habitasse platea dictumst. Ut vulputate felis justo, sit amet venenatis
@@ -122,7 +123,7 @@
         quis lectus a arcu ultricies ultrices.
     
     </div>
-    <img src="/images/artwork/Lorenzo_Garcia_01.jpg" />
+    <img src="/images/artwork/Lorenzo_Garcia_03.jpg" />
     <div>
         Nunc consequat purus sit amet erat volutpat, ut placerat nisi faucibus. Nulla facilisi. Curabitur fermentum arcu sed
         erat gravida, eu varius sem iaculis. In hac habitasse platea dictumst. Ut vulputate felis justo, sit amet venenatis
@@ -163,7 +164,7 @@
         quis lectus a arcu ultricies ultrices.
     
     </div>
-    <img src="/images/artwork/Lorenzo_Garcia_01.jpg" />
+    <img src="/images/artwork/Lorenzo_Garcia_03.jpg" />
     <div>
         Nunc consequat purus sit amet erat volutpat, ut placerat nisi faucibus. Nulla facilisi. Curabitur fermentum arcu sed
         erat gravida, eu varius sem iaculis. In hac habitasse platea dictumst. Ut vulputate felis justo, sit amet venenatis
@@ -204,7 +205,7 @@
         quis lectus a arcu ultricies ultrices.
     
     </div>
-    <img src="/images/artwork/Lorenzo_Garcia_01.jpg" />
+    <img src="/images/artwork/Lorenzo_Garcia_03.jpg" />
     <div>
         Nunc consequat purus sit amet erat volutpat, ut placerat nisi faucibus. Nulla facilisi. Curabitur fermentum arcu sed
         erat gravida, eu varius sem iaculis. In hac habitasse platea dictumst. Ut vulputate felis justo, sit amet venenatis
@@ -245,6 +246,20 @@
         quis lectus a arcu ultricies ultrices.
     
     </div>
-    <img src="/images/artwork/Lorenzo_Garcia_01.jpg" />
+    <img src="/images/artwork/Lorenzo_Garcia_03.jpg" />
 
-</div>
+</div>', 
+category='maintenance', post_type='installation', post_heading='', post_image='', post_author='', creation_date=NOW(3), update_date=NOW(3), hits=20, 
+meta='<meta name="description" content="Stepwise procedure showing how to burn SBO on a DVD.">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How can I burn SBO on a DVD?">
+<meta property="og:description" content="Stepwise procedure showing how to burn SBO on a DVD.">
+<meta property="og:url" content="https://www.getsbo.com/docs/burn-sbo-on-a-dvd/">
+<meta property="og:site_name" content="SBO">
+<meta property="og:image" content="http://www.getsbo.com/wp-content/uploads/2019/05/1_cd_popup_menu.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Stepwise procedure showing how to burn SBO on a DVD.">
+<meta name="twitter:title" content="How can I burn SBO on a DVD?">
+<meta name="twitter:image" content="http://www.getsbo.com/wp-content/uploads/2019/05/1_cd_popup_menu.png">', 
+status='published';

@@ -111,7 +111,7 @@ function prevNextItems(categoryItems, path) {
 }
 
 (async function GeneratePage() {
-	let fResp = await onAppQuery('contents', 'path,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL`);
+	let fResp = await onAppQuery('contents', 'path,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
 	let menuTree = {};
 	fResp = fResp.sort((a, b) => {
 		return a.menu_order - b.menu_order
@@ -127,7 +127,11 @@ function prevNextItems(categoryItems, path) {
 
 	app.use(async (req, res, next) => {
 		try {
-			let resp = await onAppQuery('contents', '*', `WHERE path = '${req.path}' AND status= 'published'`);
+			// word.endsWith("e")
+			let path = req.path;
+			if (path.endsWith("/") && path.length > 1) path = path.substring(0, path.length - 1)
+
+			let resp = await onAppQuery('contents', '*', `WHERE path = '${path}' AND status= 'published'`);
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
 
