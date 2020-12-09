@@ -23,50 +23,48 @@ html
 		script(src="https://kit.fontawesome.com/3ef48c52a2.js")
 
 	body
+		//- if bodyData.layout=== 'support_home'
+			include ./header.jade
+			include ./supportSearch.jade
+			block content
+			include ./../layouts/footer.html
 
-		case bodyData.layout
-			when "support_home"
-				include ./header.jade
-				include ./supportSearch.jade
-				block content
-				include ./../layouts/footer.html
+		//- else if bodyData.layout=== 'documentation'
+		//- 	include ./header.jade
+		//- 	include ./supportSearch.jade
+		//- 	include ./documentation.jade
+		//- 	include ./docsNotFound.jade
+		//- 	include ./../layouts/footer.html
 
-			when "documentation"
-				include ./header.jade
-				include ./supportSearch.jade
-				include ./documentation.jade
-				include ./docsNotFound.jade
-				include ./../layouts/footer.html
+		//- else if bodyData.layout=== 'doc_details'
+		//- 	include ./header.jade
+		//- 	include ./supportSearch.jade
+		//- 	include ./docDetails.jade
+		//- 	include ./docsNotFound.jade
+		//- 	include ./../layouts/footer.html
 
-			when "doc_details"
-				include ./header.jade
-				include ./supportSearch.jade
-				include ./docDetails.jade
-				include ./docsNotFound.jade
-				include ./../layouts/footer.html
+		//- else if bodyData.layout=== 'blog'
+		//- 	include ./header.jade
+		//- 	include ./supportSearch.jade
+		//- 	include ./blogContent.jade
+		//- 	include ./../layouts/footer.html
 
-			when "blog"
-				include ./header.jade
-				include ./supportSearch.jade
-				include ./blogContent.jade
-				include ./../layouts/footer.html
+		//- else if bodyData.layout=== 'blog_details'
+		//- 	include ./header.jade
+		//- 	include ./supportSearch.jade
+		//- 	include ./blogSingleContent.jade
+		//- 	include ./../layouts/footer.html
 
-			when "blog_details"
-				include ./header.jade
-				include ./supportSearch.jade
-				include ./blogSingleContent.jade
-				include ./../layouts/footer.html
+		//- else if bodyData.layout=== 'contact_us'
+		//- 	include ./header.jade
+		//- 	block content
+		//- 	include ./docsNotFound.jade
+		//- 	include ./../layouts/footer.html
 
-			when "contact_us"
-				include ./header.jade
-				block content
-				include ./docsNotFound.jade
-				include ./../layouts/footer.html
 
-			default
-				include ./header.jade
-				block content
-				include ./../layouts/footer.html
+		include ./header.jade
+		| !{bodyData.content}
+		include ./../layouts/footer.html
 
 		//- Third party script
 		script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js")
