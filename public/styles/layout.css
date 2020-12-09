@@ -64,6 +64,9 @@ a:hover {
 .nav-item .nav-link:hover::after {
     border-color: rgba(0, 0, 0, 0.7);
 }
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0,0,0,1);
+}
 
 .dropdown-toggle {
     position: relative;
