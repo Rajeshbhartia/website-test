@@ -16,7 +16,7 @@ const pool = mariadb.createPool({
 	user: 'root',
 	password: 'root',
 	//  connectionLimit: 5,
-	database: 'website_test'
+	database: 'website_test_2'
 });
 
 function onAppQuery(tableName, columns, args) {
@@ -112,7 +112,8 @@ function prevNextItems(categoryItems, path) {
 
 (async function GeneratePage() {
 
-	let fResp = await onAppQuery('contents', 'path,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
+	let fResp = await onAppQuery('contents', 'url,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
+	// console.log(fResp)
 	let menuTree = {};
 	fResp = fResp.sort((a, b) => {
 		return a.menu_order - b.menu_order
@@ -132,31 +133,36 @@ function prevNextItems(categoryItems, path) {
 
 		try {
 			// word.endsWith("e")
-			let path = req.path;
+			let path = req.url;
 			if (path.endsWith("/") && path.length > 1) path = path.substring(0, path.length - 1)
 
-			let resp = await onAppQuery('contents', '*', `WHERE path = '${path}' AND status= 'published'`);
+			let resp = await onAppQuery('contents', '*', `WHERE url = '${path}' AND status= 'published'`);
+			// console.log(resp);
+
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
-					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].name.toLowerCase()}' AND status= 'published' ORDER BY creation_date asc`);
-					let categories = new Set();
-					docsResp.forEach(item => categories.add(item.category.toLowerCase()));
-					let popularPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
-					let recentPosts = await onAppQuery('contents', 'name,path', `WHERE content_type = 'post' AND status= 'published' ORDER BY creation_date desc LIMIT 5`);
-					res.render('documentationLayout', { bodyData: resp[0], response: menuTree, categories: Array.from(categories).sort(), docsResp, popularPosts, recentPosts });
+					let docsResp = await onAppQuery('contents', 'name, url, tags', `WHERE tags LIKE '%${resp[0].name.toLowerCase()}%' AND status= 'published' ORDER BY creation_date asc`);
+					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
+					let categories = JSON.parse(layResp[0].extra).categories;
+
+					res.render('documentationLayout', { bodyData: resp[0], response: menuTree, categories, docsResp });
+
 
 				} else if (resp[0].layout === 'doc_details') {
 
-					let docsResp = await onAppQuery('contents', 'name, path, category', `WHERE post_type = '${resp[0].post_type}' AND status= 'published' ORDER BY creation_date asc`);
-					let categoryItems = await docsResp.filter(item => {
-						if (item.category === resp[0].category) return item;
-					})
+					console.log(resp[0])
 
-					let prevNextPost = prevNextItems(categoryItems, resp[0].path);
-					let categories = new Set();
-					docsResp.forEach(item => categories.add(item.category.toLowerCase()));
-					let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
-					res.render('docDetailsLayout', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories).sort(), prevNextPost });
+					// let docsResp = await onAppQuery('contents', 'name, url, tags', `WHERE post_type = '${resp[0].post_type}' AND status= 'published' ORDER BY creation_date asc`);
+					// console.log(docsResp)
+					// let categoryItems = await docsResp.filter(item => {
+					// 	if (item.category === resp[0].category) return item;
+					// })
+
+					// let prevNextPost = prevNextItems(categoryItems, resp[0].path);
+					// let categories = new Set();
+					// docsResp.forEach(item => categories.add(item.category.toLowerCase()));
+					// let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
+					// res.render('docDetailsLayout', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories).sort(), prevNextPost });
 
 				} else if (resp[0].layout === 'blog') {
 					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' AND status= 'published' ORDER BY creation_date desc`);

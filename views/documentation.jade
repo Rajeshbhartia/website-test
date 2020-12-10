@@ -1,3 +1,5 @@
+- var inc = 0;
+
 script.
 
 	var handleCategory = (event) => {
@@ -16,10 +18,12 @@ script.
 		categoryItem.innerHTML = ""
 
 		var dataObj = !{JSON.stringify(docsResp)}
-		dataObj.map((item) => {
-			if(item.category.toLowerCase() === currentTarget.innerText.toLowerCase()) {
-				categoryItem.innerHTML += `<li><a href="${item.path}">${item.name}</a></li>`
-			}
+		dataObj.forEach((item) => {
+			item.tags.forEach(tag=>{
+				if(tag.toLowerCase() === currentTarget.innerText.toLowerCase()) {
+					categoryItem.innerHTML += `<li><a href="${item.url}">${item.name}</a></li>`
+				}
+			})
 		})
 	}
 
@@ -49,21 +53,24 @@ script.
 					ul
 						#category-item
 							each item in docsResp
-								if categories[0].toLowerCase() === item.category.toLowerCase()
-									li
-										a(href= item.path)= item.name
+								each tag in item.tags
+									if categories[0].toLowerCase() === tag.toLowerCase()
+										li
+											a(href= item.url)= item.name
 
 			.col-md-3
 				.box.py-4.ml-md-4
-					h5.pb-2 Most Popular Topics
-					ul
-						each item in popularPosts
-							li
-								a(href= item.path)= item.name
-
-				.box.py-4.ml-md-4
 					h5.pb-2 Recently Added
 					ul
-						each item in recentPosts
-							li
-								a(href= item.path)= item.name
+						each item in docsResp
+							if inc < 5
+								li
+									a(href= item.url)= item.name
+							- inc++;
+			//- 	.box.py-4.ml-md-4
+			//- 		h5.pb-2 Most Popular Topics
+			//- 		ul
+			//- 			each item in popularPosts
+			//- 				li
+			//- 					a(href= item.url)= item.name
+
