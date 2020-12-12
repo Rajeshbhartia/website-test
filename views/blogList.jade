@@ -1,16 +1,18 @@
 .col-md-8
 	each item in allBlogs
 		.details.py-4.shadow.px-3.mb-5
-			a(href=`${item.path}`)
+			a(href=`${item.url}`)
 				h4= item.name
 			p.font-italic.pb-2
 				| Posted #{item.creation_date} by 
-				a(href="#")=item.post_author
+				span.font-weight-bold=item.author
 				|  & filed under 
-				a(href=`#`)= item.category
+				- const filteredArray = item.tags.filter(value => categories.includes(value));
+				- let str =filteredArray.join()
+				span.font-weight-bold=str
 				| .
 			.content
-				if item.post_image
-					img.img-fluid.mx-auto.d-block.mb-3(src=item.post_image)
-				p= item.post_heading
-				a.btn.btn-danger.blog-read-more-btn(href=`${item.path}`) Read More
+				if item.image
+					img.img-fluid.mx-auto.d-block.mb-3(src=item.image)
+				p= item.abstraction
+				a.btn.btn-danger.blog-read-more-btn(href=`${item.url}`) Read More

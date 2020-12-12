@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var app = express();
+const menuTree = require('./public/resources/menuTree.json');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //connect with database
 const mariadb = require('mariadb');
+const { response } = require('express');
 const pool = mariadb.createPool({
 	host: 'localhost',
 	user: 'root',
@@ -35,47 +37,47 @@ function onAppQuery(tableName, columns, args) {
 	})
 }
 
-function capitalize(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
+// function capitalize(string) {
+// 	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+// }
 
-function createSubMenu(ele, path, menuTree) {
-	let steps = path.split('/');
-	steps.shift();
-	let fSt = steps[0]
-	if (steps.length === 1) {
-		if (!menuTree[fSt]) {
-			menuTree[fSt] = {}
-			menuTree[fSt].name = capitalize(fSt)
-			menuTree[fSt].path = "#"
-			menuTree[fSt].menuSet = new Set()
-			menuTree[fSt].menuSet.add(ele);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-		} else {
-			menuTree[fSt].menuSet.add(ele)
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-		}
-	} else {
-		let ind = path.indexOf(steps[1])
-		let nPath = ''
-		if (ind > 0)
-			nPath = '/' + path.substring(ind)
-		if (!menuTree[fSt]) {
-			menuTree[fSt] = {}
-			menuTree[fSt].name = fSt
-			menuTree[fSt].path = "#"
-			let c = createSubMenu(ele, nPath, menuTree[fSt])
-			menuTree[fSt].menuSet = new Set()
-			menuTree[fSt].menuSet.add(c);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-		} else {
-			let c = createSubMenu(ele, nPath, menuTree[fSt])
-			menuTree[fSt].menuSet.add(c);
-			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-		}
-	}
-	return menuTree[fSt]
-}
+// function createSubMenu(ele, path, menuTree) {
+// 	let steps = path.split('/');
+// 	steps.shift();
+// 	let fSt = steps[0]
+// 	if (steps.length === 1) {
+// 		if (!menuTree[fSt]) {
+// 			menuTree[fSt] = {}
+// 			menuTree[fSt].name = capitalize(fSt)
+// 			menuTree[fSt].path = "#"
+// 			menuTree[fSt].menuSet = new Set()
+// 			menuTree[fSt].menuSet.add(ele);
+// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
+// 		} else {
+// 			menuTree[fSt].menuSet.add(ele)
+// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
+// 		}
+// 	} else {
+// 		let ind = path.indexOf(steps[1])
+// 		let nPath = ''
+// 		if (ind > 0)
+// 			nPath = '/' + path.substring(ind)
+// 		if (!menuTree[fSt]) {
+// 			menuTree[fSt] = {}
+// 			menuTree[fSt].name = fSt
+// 			menuTree[fSt].path = "#"
+// 			let c = createSubMenu(ele, nPath, menuTree[fSt])
+// 			menuTree[fSt].menuSet = new Set()
+// 			menuTree[fSt].menuSet.add(c);
+// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
+// 		} else {
+// 			let c = createSubMenu(ele, nPath, menuTree[fSt])
+// 			menuTree[fSt].menuSet.add(c);
+// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
+// 		}
+// 	}
+// 	return menuTree[fSt]
+// }
 
 function makeDateWisePost(posts) {
 	let obj = {}
@@ -99,35 +101,36 @@ function makeDateWisePost(posts) {
 	return obj;
 }
 
-function prevNextItems(categoryItems, path) {
-	let prevNext = [];
-	categoryItems.map((item, index) => {
-		if (item.path === path) {
-			prevNext.push(categoryItems[index - 1]);
-			prevNext.push(categoryItems[index + 1]);
-		}
-	})
-	return prevNext;
-}
+// function prevNextItems(categoryItems, path) {
+// 	let prevNext = [];
+// 	categoryItems.map((item, index) => {
+// 		if (item.path === path) {
+// 			prevNext.push(categoryItems[index - 1]);
+// 			prevNext.push(categoryItems[index + 1]);
+// 		}
+// 	})
+// 	return prevNext;
+// }
 
 (async function GeneratePage() {
 
-	let fResp = await onAppQuery('contents', 'url,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
+	// let fResp = await onAppQuery('contents', 'url,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
 	// console.log(fResp)
-	let menuTree = {};
-	fResp = fResp.sort((a, b) => {
-		return a.menu_order - b.menu_order
-	})
+	// let menuTree = {};
+	// fResp = fResp.sort((a, b) => {
+	// 	return a.menu_order - b.menu_order
+	// })
 
-	fResp.forEach(element => {
-		if (element.menu_path !== '/') {
-			createSubMenu(element, element.menu_path, menuTree)
-		} else {
-			menuTree[element.name] = element
-		}
-	});
+	// fResp.forEach(element => {
+	// 	if (element.menu_path !== '/') {
+	// 		createSubMenu(element, element.menu_path, menuTree)
+	// 	} else {
+	// 		menuTree[element.name] = element
+	// 	}
+	// });
 
 	app.use(async (req, res, next) => {
+
 		const NS_PER_SEC = 1e9;
 		var calltime = process.hrtime()
 
@@ -135,23 +138,31 @@ function prevNextItems(categoryItems, path) {
 			// word.endsWith("e")
 			let path = req.url;
 			if (path.endsWith("/") && path.length > 1) path = path.substring(0, path.length - 1)
+			let name = null;
+			if (path === '/') {
+				name = 'home'
+			} else {
+				name = path.split("/").pop()
+			}
+			let resp = await onAppQuery('contents', '*', `WHERE name = '${name}' AND status= 'published'`);
 
-			let resp = await onAppQuery('contents', '*', `WHERE url = '${path}' AND status= 'published'`);
 			// console.log(resp);
 
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
-					let docsResp = await onAppQuery('contents', 'name, url, tags', `WHERE tags LIKE '%${resp[0].name.toLowerCase()}%' AND status= 'published' ORDER BY creation_date asc`);
-					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
-					let categories = JSON.parse(layResp[0].extra).categories;
 
-					res.render('documentationLayout', { bodyData: resp[0], response: menuTree, categories, docsResp });
-
+					// let docsResp = await onAppQuery('contents', 'name,title, url_path, tags', `WHERE tags LIKE '%${resp[0].name.toLowerCase()}%' AND status= 'published' ORDER BY creation_date asc`);
+					let layResp = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
+					// let categories = JSON.parse(layResp[0].extra).categories;
+					console.log(JSON.parse(layResp[0].menu)[resp[0].name])
+					let cwData = JSON.parse(layResp[0].menu)[resp[0].name];
+					res.render('documentationLayout', { bodyData: resp[0], response: menuTree, cwData });
 
 				} else if (resp[0].layout === 'doc_details') {
+					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
 
 					console.log(resp[0])
-
+					// res.send(resp[0])
 					// let docsResp = await onAppQuery('contents', 'name, url, tags', `WHERE post_type = '${resp[0].post_type}' AND status= 'published' ORDER BY creation_date asc`);
 					// console.log(docsResp)
 					// let categoryItems = await docsResp.filter(item => {
@@ -162,32 +173,15 @@ function prevNextItems(categoryItems, path) {
 					// let categories = new Set();
 					// docsResp.forEach(item => categories.add(item.category.toLowerCase()));
 					// let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
-					// res.render('docDetailsLayout', { bodyData: resp[0], response: menuTree, popularPosts, docsResp, categories: Array.from(categories).sort(), prevNextPost });
+					res.render('docDetailsLayout', { bodyData: resp[0], response: menuTree });
 
-				} else if (resp[0].layout === 'blog') {
-					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' AND status= 'published' ORDER BY creation_date desc`);
-					let cwds = {}
-					allBlogs.forEach(item => {
-						if (cwds.hasOwnProperty(item.category)) {
-							cwds[item.category].push(item)
-						} else {
-							cwds[item.category] = [item]
-						}
-					})
+				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
+					let allBlogs = await onAppQuery('contents', 'url,name,tags,creation_date,author,image,abstraction', `WHERE tags LIKE '%blog%' AND status= 'published' ORDER BY creation_date desc`);
+					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
+					let categories = JSON.parse(layResp[0].extra).categories;
 					let yearWiseData = makeDateWisePost(allBlogs);
-					res.render('blogLayout', { bodyData: resp[0], response: menuTree, allBlogs, catData: cwds, yearWiseData });
-				} else if (resp[0].layout === 'blog_details') {
-					let allBlogs = await onAppQuery('contents', 'path,name,category,creation_date,post_author,post_image,post_heading', `WHERE content_type = 'blog' AND status= 'published' ORDER BY creation_date desc`);
-					let cwds = {}
-					allBlogs.forEach(item => {
-						if (cwds.hasOwnProperty(item.category)) {
-							cwds[item.category].push(item)
-						} else {
-							cwds[item.category] = [item]
-						}
-					})
-					let yearWiseData = makeDateWisePost(allBlogs);
-					res.render('blogDetailsLayout', { bodyData: resp[0], response: menuTree, allBlogs, catData: cwds, yearWiseData });
+					let loadedLayout = resp[0].layout === 'blog' ? 'blogLayout' : 'blogDetailsLayout'
+					res.render(loadedLayout, { bodyData: resp[0], response: menuTree, allBlogs, categories, yearWiseData });
 				} else if (resp[0].layout === 'contact_us') {
 					res.render('contactUsLayout', { bodyData: resp[0], response: menuTree });
 				} else if (resp[0].layout === 'support_home') {

@@ -17,7 +17,7 @@ script.
 		ul
 			each item in allBlogs
 				li
-					a(href=`${item.path}`)= item.name
+					a(href=`${item.url}`)= item.name
 
 	.single-category.archive-menu.shadow.py-4.mb-4
 		h5.pb-2.text-center ARCHIVE
@@ -37,7 +37,7 @@ script.
 								ul.submenu
 									each item in monthVal
 										li
-											a(href=item.path)
+											a(href=item.url)
 												i.mr-1
 												| #{item.name}
 
@@ -45,15 +45,16 @@ script.
 	.single-category.archive-menu.shadow.py-4.mb-4
 		h5.pb-2.text-center CATEGORIES
 		ul
-			each catagory, key in catData
+			each category, key in categories
 				li(onclick='{handleArchiveMenu(event)}')
 					a(href="javascript:;")
 						i.fas.fa-caret-right.mr-1
-						| #{key}
+						| #{category}
 					ul.submenu
-						each item in catagory
-							li
-								a(href=item.path)
-									i.mr-1
-									| #{item.name}
+						each item in allBlogs
+							if item.tags.includes(category)								
+								li
+									a(href=item.url)
+										i.mr-1
+										| #{item.name}
 

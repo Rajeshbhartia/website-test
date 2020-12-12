@@ -1,11 +1,101 @@
 {
-    "categories": [
-        "compatibility",
-        "configuration",
-        "functionality and features",
-        "general query",
-        "setup",
-        "maintenance",
-        "pricing_billing_invoice_subscription & payment"
+    "faq": [
+        {
+            "label": "compatibility",
+            "submenu": [
+                {
+                    "label": "Why alias IP disappeared after SBO PC is rebooted?",
+                    "path": "/docs/alias-ip-disappeared"
+                }
+            ]
+        },
+        {
+            "label": "functionality and features",
+            "submenu": [
+                {
+                    "label": "Why alias IP disappeared after SBO PC is rebooted?",
+                    "path": "/docs/alias-ip-disappeared"
+                },
+                {
+                    "label": "How much bandwidth is required for 32 channels?",
+                    "path": "/docs/bandwidth-for-32-channels"
+                }
+            ]
+        },
+        {
+            "label": "general query",
+            "submenu": [
+                {
+                    "label": "How much bandwidth is required for 32 channels?",
+                    "path": "/docs/bandwidth-for-32-channels"
+                }
+            ]
+        }
+    ],
+    "installation": [
+        {
+            "label": "general query",
+            "submenu": [
+                {
+                    "label": "How can I burn SBO on a flash drive?",
+                    "path": "/docs/burn-sbo-on-flash-drive"
+                }
+            ]
+        },
+        {
+            "label": "setup",
+            "submenu": [
+                {
+                    "label": "How can I burn SBO on a flash drive?",
+                    "path": "/docs/burn-sbo-on-flash-drive"
+                },
+                {
+                    "label": "How to configure internet for SBO PC?",
+                    "path": "/docs/configure-internet-for-sbo"
+                }
+            ]
+        }
+    ],
+    "troubleshooting": [
+        {
+            "label": "compatibility",
+            "submenu": [
+                {
+                    "label": "How can I handle clients using SBO?",
+                    "path": "/docs/handle-clients-using-sbo"
+                }
+            ]
+        },
+        {
+            "label": "functionality and features",
+            "submenu": [
+                {
+                    "label": "How to check internet speed from SBO PC?",
+                    "path": "/docs/check-internet-speed-from-sbo"
+                },
+                {
+                    "label": "How can I handle clients using SBO?",
+                    "path": "/docs/handle-clients-using-sbo"
+                }
+            ]
+        },
+        {
+            "label": "general query",
+            "submenu": [
+                {
+                    "label": "How can I handle clients using SBO?",
+                    "path": "/docs/handle-clients-using-sbo"
+                }
+            ]
+        },
+        {
+            "label": "maintenance",
+            "submenu": [
+                {
+                    "label": "How to check internet speed from SBO PC?",
+                    "path": "/docs/check-internet-speed-from-sbo"
+                }
+            ]
+        }
     ]
 }

@@ -4,7 +4,7 @@ mixin subMenu(menuName, menuLink, subMenu)
 			a.dropdown-item.dropdown-toggle(href='#')= menuName
 			ul.dropdown-menu
 				each item in subMenu
-					+subMenu(item.name, item.url, item.submenu)
+					+subMenu(item.name, item.path, item.submenu)
 	else
 		li
 			a.dropdown-item(href= menuLink)= menuName
@@ -15,7 +15,7 @@ mixin menuTree(menuName, menuLink, subMenu)
 			a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' aria-expanded="false")= menuName
 			ul.dropdown-menu
 				each item,key in subMenu
-					+subMenu(item.name, item.url, item.submenu)
+					+subMenu(item.name, item.path, item.submenu)
 	else
 		// for active link .active
 		li.nav-item
@@ -35,6 +35,6 @@ header.header.sticky-top.shadow-sm
 					#navbarTogglerDemo01.collapse.navbar-collapse
 						ul.navbar-nav.mr-auto.mt-2.mt-lg-0
 							each item in response
-								+menuTree(item.name, item.url, item.submenu)
+								+menuTree(item.name, item.path, item.submenu)
 
 				a.ml-2.header-portal(href="https://sboportal.getsbo.com" target="_blank" rel="noopener") CUSTOMER PORTAL

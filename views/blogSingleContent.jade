@@ -6,10 +6,13 @@
                     h1= bodyData.name
                     p.font-italic.pb-2
                         | Posted #{bodyData.creation_date} by 
-                        a(href="#") #{bodyData.post_author}
+                        span.font-weight-bold= bodyData.author
                         |  & filed under 
-                        a(href=`#`) #{bodyData.category}
+                        - const filteredArray = bodyData.tags.filter(value => categories.includes(value));
+                        - let str =filteredArray.join()
+                        span.font-weight-bold=str
                         | .
+
                     .content 
                         | !{bodyData.content}
 

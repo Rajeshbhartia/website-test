@@ -19,6 +19,9 @@
 .details a {
 	color: #1e528a;
 }
+.details a.btn,.details a.btn:hover{
+	color: #fff;
+}
 
 .details a:hover {
 	color: #2a7bff;

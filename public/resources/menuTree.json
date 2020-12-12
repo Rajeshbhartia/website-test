@@ -1,0 +1,50 @@
+{
+    "Home": {
+        "name": "Home",
+        "path": "/"
+    },
+    "Products": {
+        "name": "Products",
+        "path": "#",
+        "submenu": [
+            {
+                "name": "SBO",
+                "path": "/products/sbo"
+            },
+            {
+                "name": "SyncSwitch",
+                "path": "/products/syncswitch"
+            }
+        ]
+    },
+    "Packages": {
+        "name": "Packages",
+        "path": "/packages"
+    },
+    "Support": {
+        "name": "Support",
+        "path": "/support"
+    },
+    "Downloads": {
+        "name": "Downloads",
+        "path": "/downloads"
+    },
+    "Company": {
+        "name": "Company",
+        "path": "#",
+        "submenu": [
+            {
+                "name": "About Us",
+                "path": "/company/about-us"
+            },
+            {
+                "name": "Contact US",
+                "path": "/company/contact-us"
+            }
+        ]
+    },
+    "Blog": {
+        "name": "Blog",
+        "path": "/blog"
+    }
+}
