@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 const mariadb = require('mariadb');
 const { response } = require('express');
 const pool = mariadb.createPool({
-	host: 'localhost',
+	host: '192.168.207.45',
 	user: 'root',
 	password: 'root',
 	//  connectionLimit: 5,
@@ -101,6 +101,12 @@ function makeDateWisePost(posts) {
 	return obj;
 }
 
+function getCategories(categories) {
+	let allCategories = [];
+	categories.forEach(item => allCategories.push(Object.keys(item).join()));
+	return allCategories;
+}
+
 // function prevNextItems(categoryItems, path) {
 // 	let prevNext = [];
 // 	categoryItems.map((item, index) => {
@@ -128,6 +134,7 @@ function makeDateWisePost(posts) {
 	// 		menuTree[element.name] = element
 	// 	}
 	// });
+
 
 	app.use(async (req, res, next) => {
 
@@ -176,12 +183,16 @@ function makeDateWisePost(posts) {
 					res.render('docDetailsLayout', { bodyData: resp[0], response: menuTree });
 
 				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
-					let allBlogs = await onAppQuery('contents', 'url,name,tags,creation_date,author,image,abstraction', `WHERE tags LIKE '%blog%' AND status= 'published' ORDER BY creation_date desc`);
-					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
-					let categories = JSON.parse(layResp[0].extra).categories;
+
+					let allBlogs = await onAppQuery('contents', 'url_path, name, title, tags,creation_date, author, images, abstract', `WHERE layout = 'blog_details' AND status= 'published' ORDER BY creation_date desc`);
+
+					let cwData = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
+					let categories = getCategories(JSON.parse(cwData[0].menu));
+
 					let yearWiseData = makeDateWisePost(allBlogs);
 					let loadedLayout = resp[0].layout === 'blog' ? 'blogLayout' : 'blogDetailsLayout'
-					res.render(loadedLayout, { bodyData: resp[0], response: menuTree, allBlogs, categories, yearWiseData });
+					res.render(loadedLayout, { bodyData: resp[0], response: menuTree, allBlogs, categories, cwData: JSON.parse(cwData[0].menu), yearWiseData });
+
 				} else if (resp[0].layout === 'contact_us') {
 					res.render('contactUsLayout', { bodyData: resp[0], response: menuTree });
 				} else if (resp[0].layout === 'support_home') {

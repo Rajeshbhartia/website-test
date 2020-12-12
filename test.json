@@ -97,5 +97,27 @@
                 }
             ]
         }
+    ],
+    "blog": [
+        {
+            "events": [
+                {
+                    "title": "Virtual Private Network (VPN)",
+                    "path": "/vpn"
+                }
+            ]
+        },
+        {
+            "newsletters": [
+                {
+                    "title": "Virtual Private Network (VPN)",
+                    "path": "/vpn"
+                },
+                {
+                    "title": "GET SBO: A new home of SBO Bandwidth Optimizer",
+                    "path": "/sbo-bandwidth-optimizer"
+                }
+            ]
+        }
     ]
 }
