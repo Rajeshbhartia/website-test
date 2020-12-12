@@ -1,8 +1,8 @@
 .col-md-8
 	each item in allBlogs
 		.details.py-4.shadow.px-3.mb-5
-			a(href=`${item.url}`)
-				h4= item.name
+			a(href= item.url_path + item.name)
+				h4= item.title
 			p.font-italic.pb-2
 				| Posted #{item.creation_date} by 
 				span.font-weight-bold=item.author
@@ -12,7 +12,7 @@
 				span.font-weight-bold=str
 				| .
 			.content
-				if item.image
-					img.img-fluid.mx-auto.d-block.mb-3(src=item.image)
-				p= item.abstraction
-				a.btn.btn-danger.blog-read-more-btn(href=`${item.url}`) Read More
+				if item.images
+					img.img-fluid.mx-auto.d-block.mb-3(src=item.images)
+				p= item.abstract
+				a.btn.btn-danger.blog-read-more-btn(href= item.url_path + item.name ) Read More
