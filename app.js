@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //connect with database
 const mariadb = require('mariadb');
+const { json } = require('body-parser');
 const pool = mariadb.createPool({
 	host: '192.168.207.45',
 	user: 'root',
@@ -91,21 +92,23 @@ function getCategories(categories) {
 
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
-					let layResp = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
-					let cwData = JSON.parse(layResp[0].menu)[resp[0].name];
-					res.render('documentationLayout', { bodyData: resp[0], settings, cwData });
-
+					let allPostResp = await onAppQuery('contents', 'name,title,url_path,tags', `WHERE website = '${req.hostname}' AND layout = '${resp[0].name}' AND status= 'published' ORDER BY creation_date asc`);
+					let categories = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].name}'`);
+					categories = JSON.parse(categories[0].menu)
+					res.render('documentationLayout', { bodyData: resp[0], settings, allPostResp, categories });
 				} else if (resp[0].layout === 'faq' || resp[0].layout === 'installation' || resp[0].layout === 'troubleshooting') {
+					let allPostResp = await onAppQuery('contents', 'name,title,url_path,tags', `WHERE website = '${req.hostname}' AND layout = '${resp[0].layout}' AND status= 'published' ORDER BY creation_date asc`);
+
 					let docsResp = await onAppQuery('contents', 'name,title, url_path', `WHERE layout = '${resp[0].layout}' AND status= 'published' ORDER BY creation_date asc LIMIT 6`);
 					let recentPost = await onAppQuery('contents', 'name,title, url_path', `WHERE layout = 'faq' or layout = 'installation' or layout = 'troubleshooting' AND status= 'published' ORDER BY creation_date asc LIMIT 5`);
 					let layResp = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
-					let cwData = JSON.parse(layResp[0].menu);
-					res.render('docDetailsLayout', { bodyData: resp[0], settings, parentNode: resp[0].layout, docsResp, cwData, recentPost });
+					let categories = JSON.parse(layResp[0].menu);
+					res.render('docDetailsLayout', { bodyData: resp[0], settings, parentNode: resp[0].layout, docsResp, categories, recentPost, allPostResp });
 
 				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
 					let allBlogs = await onAppQuery('contents', 'url_path, name, title, tags,creation_date, author, images, abstract', `WHERE layout = 'blog_details' AND status= 'published' ORDER BY creation_date desc`);
 					let cwData = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
-					let categories = getCategories(JSON.parse(cwData[0].menu));	
+					let categories = getCategories(JSON.parse(cwData[0].menu));
 					let yearWiseData = makeDateWisePost(allBlogs);
 					let loadedLayout = resp[0].layout === 'blog' ? 'blogLayout' : 'blogDetailsLayout'
 					res.render(loadedLayout, { bodyData: resp[0], settings, allBlogs, categories, cwData: JSON.parse(cwData[0].menu), yearWiseData });

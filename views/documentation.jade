@@ -15,20 +15,15 @@ script.
 		document.getElementById('category-name').innerText = currentTarget.innerText
 		categoryItem.innerHTML = ""
 
-		var dataObj = !{JSON.stringify(cwData)}
-		console.log(dataObj)
-		console.log(currentTarget.innerText)
-		dataObj.forEach((item) => {
-			//- item.submenu.forEach(tag=>{
-			//- 	if(tag.label.toLowerCase() === currentTarget.innerText.toLowerCase()) {
-			//- 		categoryItem.innerHTML += `<li><a href="${tag.path}">${tag.label}</a></li>`
-			//- 	}
-			//- })
-			if(item.label.toLowerCase() === currentTarget.innerText.toLowerCase()){
-				item.submenu.forEach(sm=>{
-					categoryItem.innerHTML += `<li><a href="${sm.path}">${sm.label}</a></li>`
-				})
-			}
+		//- var categories = !{JSON.stringify(categories)}
+		var allPostResp = !{JSON.stringify(allPostResp)}
+
+		allPostResp.forEach((item) => {
+			item.tags.forEach(tag=>{
+				if(tag.toLowerCase().replace(/_/g," ") === currentTarget.innerText.toLowerCase()) {
+					categoryItem.innerHTML += `<li><a href="${item.url_path+item.name}">${item.title}</a></li>`
+				}
+			})
 		})
 	}
 
@@ -48,18 +43,20 @@ script.
 				.single-category.shadow.py-4
 					h5.pb-2.text-center CATEGORIES
 					ul
-						each item, index in cwData
+						each item, index in categories
 							li
-								a(href="javascript:;" onclick='handleCategory(event)' class=index === 0 ? "active": null)= item.label
+								a(href="javascript:;" onclick='handleCategory(event)' class=index === 0 ? "active": null)= item.name.replace(/_/g," ")
 
 			.col-md-5
 				.box.py-4.ml-md-4
-					h5#category-name.pb-2.text-capitalize= cwData[0].label
+					h5#category-name.pb-2.text-capitalize= categories[0].name
 					ul
 						#category-item
-							each item in cwData[0].submenu
-								li
-									a(href= item.path)= item.label
+							each item in allPostResp
+								each tag in item.tags
+									if(tag === categories[0].name)
+										li
+											a(href= item.url_path+item.name)= item.title
 
 			//- .col-md-3
 			//- 	.box.py-4.ml-md-4

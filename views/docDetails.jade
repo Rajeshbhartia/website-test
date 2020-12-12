@@ -34,21 +34,23 @@
 
 				.category-dropdown
 					#accordionExample.accordion
-						each item in cwData
-							-var idName = item.label.replace(/ /g, "").replace(/,/g, "").replace(/&/g, "");
+						each item in categories
+							-var idName = item.name.replace(/ /g, "").replace(/,/g, "").replace(/&/g, "");
 
 							.card
 								//- .card-header
 								h2.mb-0
 									button.btn.custom-acc.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target=`#${idName}`)
-										span= item.label
+										span= item.name
 										i.fas.fa-angle-down.rotate-icon
 								div(class="collapse" id= idName aria-labelledby='headingOne' data-parent='#accordionExample')
 									.card-body.p-0
 										ul
-											each singleDocs in item.submenu
-												li
-													a.pl-4(href= singleDocs.path)= singleDocs.label
+											each singleDocs in allPostResp
+												each tag in singleDocs.tags
+													if tag.toLowerCase() === item.name.toLowerCase()
+														li
+															a.pl-4(href= singleDocs.url_path+singleDocs.name)= singleDocs.title
 
 
 			.col-md-4
