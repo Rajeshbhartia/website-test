@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 
 //connect with database
 const mariadb = require('mariadb');
-const { response } = require('express');
 const pool = mariadb.createPool({
 	host: 'localhost',
 	user: 'root',
@@ -37,47 +36,6 @@ function onAppQuery(tableName, columns, args) {
 	})
 }
 
-// function capitalize(string) {
-// 	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-// }
-
-// function createSubMenu(ele, path, menuTree) {
-// 	let steps = path.split('/');
-// 	steps.shift();
-// 	let fSt = steps[0]
-// 	if (steps.length === 1) {
-// 		if (!menuTree[fSt]) {
-// 			menuTree[fSt] = {}
-// 			menuTree[fSt].name = capitalize(fSt)
-// 			menuTree[fSt].path = "#"
-// 			menuTree[fSt].menuSet = new Set()
-// 			menuTree[fSt].menuSet.add(ele);
-// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-// 		} else {
-// 			menuTree[fSt].menuSet.add(ele)
-// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-// 		}
-// 	} else {
-// 		let ind = path.indexOf(steps[1])
-// 		let nPath = ''
-// 		if (ind > 0)
-// 			nPath = '/' + path.substring(ind)
-// 		if (!menuTree[fSt]) {
-// 			menuTree[fSt] = {}
-// 			menuTree[fSt].name = fSt
-// 			menuTree[fSt].path = "#"
-// 			let c = createSubMenu(ele, nPath, menuTree[fSt])
-// 			menuTree[fSt].menuSet = new Set()
-// 			menuTree[fSt].menuSet.add(c);
-// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-// 		} else {
-// 			let c = createSubMenu(ele, nPath, menuTree[fSt])
-// 			menuTree[fSt].menuSet.add(c);
-// 			menuTree[fSt].submenu = Array.from(menuTree[fSt].menuSet);
-// 		}
-// 	}
-// 	return menuTree[fSt]
-// }
 
 function makeDateWisePost(posts) {
 	let obj = {}
@@ -101,41 +59,20 @@ function makeDateWisePost(posts) {
 	return obj;
 }
 
-// function prevNextItems(categoryItems, path) {
-// 	let prevNext = [];
-// 	categoryItems.map((item, index) => {
-// 		if (item.path === path) {
-// 			prevNext.push(categoryItems[index - 1]);
-// 			prevNext.push(categoryItems[index + 1]);
-// 		}
-// 	})
-// 	return prevNext;
-// }
-
 (async function GeneratePage() {
-
-	// let fResp = await onAppQuery('contents', 'url,name,menu_order,menu_path', `WHERE NULLIF(menu_path, '') IS NOT NULL AND status= 'published'`);
-	// console.log(fResp)
-	// let menuTree = {};
-	// fResp = fResp.sort((a, b) => {
-	// 	return a.menu_order - b.menu_order
-	// })
-
-	// fResp.forEach(element => {
-	// 	if (element.menu_path !== '/') {
-	// 		createSubMenu(element, element.menu_path, menuTree)
-	// 	} else {
-	// 		menuTree[element.name] = element
-	// 	}
-	// });
+	let webResp = await onAppQuery('websites', '*', ``);
+	let sites = {};
+	while (webResp.length) {
+		let cfg = webResp.shift();
+		sites[cfg.website] = cfg;
+	}
 
 	app.use(async (req, res, next) => {
-
 		const NS_PER_SEC = 1e9;
 		var calltime = process.hrtime()
-
+		var settings = sites[req.hostname];
+		console.log(settings)
 		try {
-			// word.endsWith("e")
 			let path = req.url;
 			if (path.endsWith("/") && path.length > 1) path = path.substring(0, path.length - 1)
 			let name = null;
@@ -144,51 +81,36 @@ function makeDateWisePost(posts) {
 			} else {
 				name = path.split("/").pop()
 			}
-			let resp = await onAppQuery('contents', '*', `WHERE name = '${name}' AND status= 'published'`);
-
-			// console.log(resp);
+			let resp = await onAppQuery('contents', '*', `WHERE website = '${req.hostname}' AND name = '${name}' AND status= 'published'`);
 
 			if (resp.length) {
 				if (resp[0].layout === 'documentation') {
-
-					// let docsResp = await onAppQuery('contents', 'name,title, url_path, tags', `WHERE tags LIKE '%${resp[0].name.toLowerCase()}%' AND status= 'published' ORDER BY creation_date asc`);
 					let layResp = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
-					// let categories = JSON.parse(layResp[0].extra).categories;
-					console.log(JSON.parse(layResp[0].menu)[resp[0].name])
 					let cwData = JSON.parse(layResp[0].menu)[resp[0].name];
-					res.render('documentationLayout', { bodyData: resp[0], response: menuTree, cwData });
+					res.render('documentationLayout', { bodyData: resp[0], settings, cwData });
 
-				} else if (resp[0].layout === 'doc_details') {
-					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
+				} else if (resp[0].layout === 'faq' || resp[0].layout === 'installation' || resp[0].layout === 'troubleshooting') {
+					let docsResp = await onAppQuery('contents', 'name,title, url_path', `WHERE layout = '${resp[0].layout}' AND status= 'published' ORDER BY creation_date asc LIMIT 6`);
+					let recentPost = await onAppQuery('contents', 'name,title, url_path', `WHERE layout = 'faq' or layout = 'installation' or layout = 'troubleshooting' AND status= 'published' ORDER BY creation_date asc LIMIT 5`);
+					let layResp = await onAppQuery('layouts', 'menu', `WHERE layout = '${resp[0].layout}'`);
+					let cwData = JSON.parse(layResp[0].menu);
 
-					console.log(resp[0])
-					// res.send(resp[0])
-					// let docsResp = await onAppQuery('contents', 'name, url, tags', `WHERE post_type = '${resp[0].post_type}' AND status= 'published' ORDER BY creation_date asc`);
-					// console.log(docsResp)
-					// let categoryItems = await docsResp.filter(item => {
-					// 	if (item.category === resp[0].category) return item;
-					// })
-
-					// let prevNextPost = prevNextItems(categoryItems, resp[0].path);
-					// let categories = new Set();
-					// docsResp.forEach(item => categories.add(item.category.toLowerCase()));
-					// let popularPosts = await onAppQuery('contents', 'name, path', `WHERE content_type = 'post' AND status= 'published' ORDER BY hits desc LIMIT 5`);
-					res.render('docDetailsLayout', { bodyData: resp[0], response: menuTree });
-
-				} else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
+					res.render('docDetailsLayout', { bodyData: resp[0], settings, parentNode: resp[0].layout, docsResp, cwData, recentPost });
+				}
+				else if (resp[0].layout === 'blog' || resp[0].layout === 'blog_details') {
 					let allBlogs = await onAppQuery('contents', 'url,name,tags,creation_date,author,image,abstraction', `WHERE tags LIKE '%blog%' AND status= 'published' ORDER BY creation_date desc`);
 					let layResp = await onAppQuery('layouts', 'extra', `WHERE layout = '${resp[0].layout}'`);
 					let categories = JSON.parse(layResp[0].extra).categories;
 					let yearWiseData = makeDateWisePost(allBlogs);
 					let loadedLayout = resp[0].layout === 'blog' ? 'blogLayout' : 'blogDetailsLayout'
-					res.render(loadedLayout, { bodyData: resp[0], response: menuTree, allBlogs, categories, yearWiseData });
+					res.render(loadedLayout, { bodyData: resp[0], settings, allBlogs, categories, yearWiseData });
 				} else if (resp[0].layout === 'contact_us') {
-					res.render('contactUsLayout', { bodyData: resp[0], response: menuTree });
+					res.render('contactUsLayout', { bodyData: resp[0], settings });
 				} else if (resp[0].layout === 'support_home') {
-					res.render('supportHomeLayout', { bodyData: resp[0], response: menuTree });
+					res.render('supportHomeLayout', { bodyData: resp[0], settings });
 				}
 				else {
-					res.render('layout', { bodyData: resp[0], response: menuTree });
+					res.render('layout', { bodyData: resp[0], settings });
 				}
 				const diff = process.hrtime(calltime);
 				console.log(`Benchmark took ${(diff[0] * NS_PER_SEC + diff[1]) / 1000000} ms`);

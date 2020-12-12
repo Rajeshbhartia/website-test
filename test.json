@@ -1,101 +1,54 @@
 {
-    "faq": [
-        {
-            "label": "compatibility",
-            "submenu": [
-                {
-                    "label": "Why alias IP disappeared after SBO PC is rebooted?",
-                    "path": "/docs/alias-ip-disappeared"
-                }
-            ]
+    "app_name": "SBO",
+    "app_icon": "/resources/images/brand-logo.svg",
+    "menu": {
+        "Home": {
+            "name": "Home",
+            "path": "/"
         },
-        {
-            "label": "functionality and features",
+        "Products": {
+            "name": "Products",
+            "path": "#",
             "submenu": [
                 {
-                    "label": "Why alias IP disappeared after SBO PC is rebooted?",
-                    "path": "/docs/alias-ip-disappeared"
+                    "name": "SBO",
+                    "path": "/products/sbo"
                 },
                 {
-                    "label": "How much bandwidth is required for 32 channels?",
-                    "path": "/docs/bandwidth-for-32-channels"
+                    "name": "SyncSwitch",
+                    "path": "/products/syncswitch"
                 }
             ]
         },
-        {
-            "label": "general query",
-            "submenu": [
-                {
-                    "label": "How much bandwidth is required for 32 channels?",
-                    "path": "/docs/bandwidth-for-32-channels"
-                }
-            ]
-        }
-    ],
-    "installation": [
-        {
-            "label": "general query",
-            "submenu": [
-                {
-                    "label": "How can I burn SBO on a flash drive?",
-                    "path": "/docs/burn-sbo-on-flash-drive"
-                }
-            ]
+        "Packages": {
+            "name": "Packages",
+            "path": "/packages"
         },
-        {
-            "label": "setup",
+        "Support": {
+            "name": "Support",
+            "path": "/support"
+        },
+        "Downloads": {
+            "name": "Downloads",
+            "path": "/downloads"
+        },
+        "Company": {
+            "name": "Company",
+            "path": "#",
             "submenu": [
                 {
-                    "label": "How can I burn SBO on a flash drive?",
-                    "path": "/docs/burn-sbo-on-flash-drive"
+                    "name": "About Us",
+                    "path": "/company/about-us"
                 },
                 {
-                    "label": "How to configure internet for SBO PC?",
-                    "path": "/docs/configure-internet-for-sbo"
+                    "name": "Contact US",
+                    "path": "/company/contact-us"
                 }
             ]
+        },
+        "Blog": {
+            "name": "Blog",
+            "path": "/blog"
         }
-    ],
-    "troubleshooting": [
-        {
-            "label": "compatibility",
-            "submenu": [
-                {
-                    "label": "How can I handle clients using SBO?",
-                    "path": "/docs/handle-clients-using-sbo"
-                }
-            ]
-        },
-        {
-            "label": "functionality and features",
-            "submenu": [
-                {
-                    "label": "How to check internet speed from SBO PC?",
-                    "path": "/docs/check-internet-speed-from-sbo"
-                },
-                {
-                    "label": "How can I handle clients using SBO?",
-                    "path": "/docs/handle-clients-using-sbo"
-                }
-            ]
-        },
-        {
-            "label": "general query",
-            "submenu": [
-                {
-                    "label": "How can I handle clients using SBO?",
-                    "path": "/docs/handle-clients-using-sbo"
-                }
-            ]
-        },
-        {
-            "label": "maintenance",
-            "submenu": [
-                {
-                    "label": "How to check internet speed from SBO PC?",
-                    "path": "/docs/check-internet-speed-from-sbo"
-                }
-            ]
-        }
-    ]
+    }
 }
